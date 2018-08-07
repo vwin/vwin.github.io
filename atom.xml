@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>V&#39;s BLOG</title>
+  
+  <subtitle>上不知天文，下不晓地理</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://vwin.github.io/"/>
+  <updated>2018-08-07T09:53:53.392Z</updated>
+  <id>http://vwin.github.io/</id>
+  
+  <author>
+    <name>V</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo插入图片</title>
+    <link href="http://vwin.github.io/2018/08/07/Hexo%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/"/>
+    <id>http://vwin.github.io/2018/08/07/Hexo插入图片/</id>
+    <published>2018-08-07T09:37:40.000Z</published>
+    <updated>2018-08-07T09:53:53.392Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hexo 博客文章插入图片<br><a id="more"></a></p><h2 id="Hexo博客插入图片"><a href="#Hexo博客插入图片" class="headerlink" title="Hexo博客插入图片"></a>Hexo博客插入图片</h2><p>在网上查了一下有以下几种方式往hexo文章中插入图片</p><h3 id="本地引用"><a href="#本地引用" class="headerlink" title="本地引用"></a>本地引用</h3><h4 id="绝对路径"><a href="#绝对路径" class="headerlink" title="绝对路径"></a>绝对路径</h4><p>当Hexo项目中只用到少量图片时，可以将图片统一放在source/images文件夹中，通过markdown语法访问它们。对于source/images/image.jpg这张图片可以用以下语法访问到<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![](/images/image.jpg)</span><br></pre></td></tr></table></figure><p></p><p>图片既可以在首页内容中访问到，也可以在文章正文中访问到。</p><h4 id="相对路径"><a href="#相对路径" class="headerlink" title="相对路径"></a>相对路径</h4><p>图片除了可以放在统一的images文件夹中，还可以放在文章自己的目录中。文章的目录可以通过配置博客根目录下的_config.yml来生成。<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">post_asset_folder: true</span><br></pre></td></tr></table></figure><p></p><p>将_config.yml文件中的配置项post_asset_folder设为true后，执行命令$ hexo new post_name，在source/_posts中会生成文章post_name.md和同名文件夹post_name。将图片资源放在post_name中，文章就可以使用相对路径引用图片资源了。_posts/post_name/image.jpg这张照片可以用以下方式访问：<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![](image.jpg)</span><br></pre></td></tr></table></figure><p></p><p>上述markdown的引用方式，图片只能在文章中显示，但无法在首页中正常显示。<br>如果希望图片在文章和首页中同时显示，可以使用标签插件语法。_posts/post_name/image.jpg这张照片可以用以下方式访问：<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_img image.jpg This is an image %&#125;</span><br></pre></td></tr></table></figure><p></p><h3 id="CDN引用"><a href="#CDN引用" class="headerlink" title="CDN引用"></a>CDN引用</h3><p>除了在本地存储图片，还可以将图片上传到一些免费的CDN服务中。因国内访问github速度较慢，所以将突破放到国内图床上，然后引用外链是常用的方法。常用的图床有：</p><ol><li>微博图床（Chrome浏览器有个“新浪微博图床”插件，可以自动生成markdown链接）简单方便</li><li>七牛：需要注册且实名认证等太麻烦，放弃</li><li>腾讯云等云存储服务，需要先将照片放到云盘，然后找到超链接，然后粘贴到文章。太麻烦，放弃。</li></ol><h3 id="使用GitHub"><a href="#使用GitHub" class="headerlink" title="使用GitHub"></a>使用GitHub</h3><p>使用github存储博客图片</p><ol><li>创建一个空的repo</li><li>然后将图片push到repo中</li><li>点击图片进去，有个download，右键复制链接</li><li>将链接插入文章<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![logo](https://github.com/xxxx/xx.jpg)</span><br></pre></td></tr></table></figure></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      Hexo博客插入图片
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://vwin.github.io/categories/Hexo/"/>
+    
+    
+      <category term="hexo" scheme="http://vwin.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jmeter基础--概念</title>
+    <link href="http://vwin.github.io/2018/08/07/Jmeter%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/"/>
+    <id>http://vwin.github.io/2018/08/07/Jmeter基础概念/</id>
+    <published>2018-08-07T07:53:24.000Z</published>
+    <updated>2018-08-07T09:54:24.810Z</updated>
+    
+    <content type="html"><![CDATA[<p>Jmeter基础概念<br><a id="more"></a></p><h2 id="Jmeter介绍"><a href="#Jmeter介绍" class="headerlink" title="Jmeter介绍"></a>Jmeter介绍</h2><p>一个优秀的开源性能测试工具<br>官网地址：<a href="http://jmeter.apache.org/download_jmeter.cgi" target="_blank" rel="noopener">http://jmeter.apache.org/download_jmeter.cgi</a></p><h2 id="Jmeter包含组件"><a href="#Jmeter包含组件" class="headerlink" title="Jmeter包含组件"></a>Jmeter包含组件</h2><p>Jmeter工具和其他性能工具在原理上完全一致，工具包含4个部分：</p><p>（1）负载发生器：用于产生负载，通常以多线程或是多进程的方式模拟用户行为。</p><p>（2）用户运行器：通常是一个脚本运行引擎，用户运行器附加在线程或进程上，根据脚本要求模拟指定的用户行为。</p><p>（3）资源生成器：用于生成测试过程中服务器、负载机的资源数据。</p><p>（4）报表生成器：根据测试中霍地的数据生成报表，提供可视化的数据显示方式。</p><h3 id="Jmeter设置中文"><a href="#Jmeter设置中文" class="headerlink" title="Jmeter设置中文"></a>Jmeter设置中文</h3><ol><li>jmeter.properties中配置Jmeter界面语言<br>/apache-jmeter-4.0/bin/jmeter.properties中language=en默认屏蔽，取消屏蔽后显示英文界面，language=zh强制显示简体中文界面。</li><li>GUI界面配置：<br><img src="https://github.com/vwin/markdownpic/raw/master/hexo-blog/jmeter-lang.png" alt="Jmeter语言选择"></li></ol><h3 id="Jmeter测试计划元件"><a href="#Jmeter测试计划元件" class="headerlink" title="Jmeter测试计划元件"></a>Jmeter测试计划元件</h3><p>Test Plan (测试计划)：用来描述一个性能测试，包含与本次性能测试所有相关的功能。也就说本的性能测试的所有内容是于基于一个计划的。下面看一下一个计划下面都有哪些主要的功能模块（右键单击“测试计划”弹出菜单）。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Jmeter基础概念&lt;br&gt;
+    
+    </summary>
+    
+      <category term="性能测试" scheme="http://vwin.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/"/>
+    
+    
+      <category term="jmeter" scheme="http://vwin.github.io/tags/jmeter/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo Next主题开启字数统计和阅读时长统计</title>
+    <link href="http://vwin.github.io/2018/08/02/Hexo-Next%E4%B8%BB%E9%A2%98%E5%BC%80%E5%90%AF%E5%AD%97%E6%95%B0%E7%BB%9F%E8%AE%A1%E5%92%8C%E9%98%85%E8%AF%BB%E6%97%B6%E9%95%BF%E7%BB%9F%E8%AE%A1/"/>
+    <id>http://vwin.github.io/2018/08/02/Hexo-Next主题开启字数统计和阅读时长统计/</id>
+    <published>2018-08-02T08:37:32.000Z</published>
+    <updated>2018-08-02T09:01:00.561Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hexo Next主题开启字数统计和阅读时长统计<br><a id="more"></a></p><blockquote><p>注：Next主题版本 v6.3.0</p></blockquote><h2 id="安装-hexo-symbols-count-time"><a href="#安装-hexo-symbols-count-time" class="headerlink" title="安装 hexo-symbols-count-time"></a>安装 hexo-symbols-count-time</h2><p>在博客目录下执行：<br></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-symbols-count-time</span><br><span class="line">or</span><br><span class="line">yarn add hexo-symbols-count-time</span><br></pre></td></tr></table></figure><p></p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ol><li>hexo配置<br>在博客根目录下的_config.yaml,增加如下配置：<blockquote><p>注：增加该配置需要重启hexo<br>hexo clean &amp;&amp; hexo s</p></blockquote></li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  symbols: true # 文章字数</span><br><span class="line">  time: true # 阅读时长</span><br><span class="line">  total_symbols: true # 所有文章总字数</span><br><span class="line">  total_time: true # 所有文章阅读中时长</span><br></pre></td></tr></table></figure><ol><li>next主题配置<br>在themes/next/_config.yaml，修改如下配置：<blockquote><p>注：无需重启</p></blockquote></li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  separated_meta: true  # 是否换行显示 字数统计 及 阅读时长</span><br><span class="line">  item_text_post: true  # 文章 字数统计 阅读时长 使用图标 还是 文本表示</span><br><span class="line">  item_text_total: false # 博客底部统计 字数统计 阅读时长 使用图标 还是 文本表示</span><br><span class="line">  awl: 4</span><br><span class="line">  wpm: 275</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Hexo Next主题开启字数统计和阅读时长统计&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://vwin.github.io/categories/Hexo/"/>
+    
+    
+      <category term="hexo" scheme="http://vwin.github.io/tags/hexo/"/>
+    
+      <category term="next" scheme="http://vwin.github.io/tags/next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo Next主题头像旋转</title>
+    <link href="http://vwin.github.io/2018/08/02/Hexo-Next%E4%B8%BB%E9%A2%98%E5%A4%B4%E5%83%8F%E6%97%8B%E8%BD%AC/"/>
+    <id>http://vwin.github.io/2018/08/02/Hexo-Next主题头像旋转/</id>
+    <published>2018-08-02T08:32:39.000Z</published>
+    <updated>2018-08-02T08:46:05.732Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hexo Next主题将头像显示成圆形，鼠标放上去有旋转效果。<br><a id="more"></a><br>将头像显示成圆形，鼠标放上去有旋转效果。<br>找到/themes/next/source/css/_common/components/sidebar/sidebar-author.styl<br>替换其中的site-author-img和site-author-image:hover属性</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 头像显示圆形</span></span><br><span class="line">.site-author-image &#123;</span><br><span class="line">  display: block;</span><br><span class="line">  margin: <span class="number">0</span> auto;</span><br><span class="line">  padding: $site-author-image-padding;</span><br><span class="line">  max-width: $site-author-image-width;</span><br><span class="line">  height: $site-author-image-height;</span><br><span class="line">  border: site-author-image-border-color;</span><br><span class="line">  /* start*/</span><br><span class="line">  border-radius: <span class="number">50</span>%</span><br><span class="line">  webkit-transition: <span class="number">1.4</span>s all;</span><br><span class="line">  moz-transition: <span class="number">1.4</span>s all;</span><br><span class="line">  ms-transition: <span class="number">1.4</span>s all;</span><br><span class="line">  transition: <span class="number">1.4</span>s all;</span><br><span class="line">  /* end */</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 头像旋转事件</span></span><br><span class="line">/* start */</span><br><span class="line">.site-author-image:hover &#123;</span><br><span class="line">  background-color: <span class="comment">#55DAE1;</span></span><br><span class="line">  webkit-transform: rotate(<span class="number">360</span>deg) scale(<span class="number">1.1</span>);</span><br><span class="line">  moz-transform: rotate(<span class="number">360</span>deg) scale(<span class="number">1.1</span>);</span><br><span class="line">  ms-transform: rotate(<span class="number">360</span>deg) scale(<span class="number">1.1</span>);</span><br><span class="line">  transform: rotate(<span class="number">360</span>deg) scale(<span class="number">1.1</span>);</span><br><span class="line">&#125;</span><br><span class="line">/* end */</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Hexo Next主题将头像显示成圆形，鼠标放上去有旋转效果。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://vwin.github.io/categories/Hexo/"/>
+    
+    
+      <category term="hexo" scheme="http://vwin.github.io/tags/hexo/"/>
+    
+      <category term="next" scheme="http://vwin.github.io/tags/next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jmeter安装</title>
+    <link href="http://vwin.github.io/2018/08/01/Jmeter%E5%AE%89%E8%A3%85/"/>
+    <id>http://vwin.github.io/2018/08/01/Jmeter安装/</id>
+    <published>2018-08-01T07:22:52.000Z</published>
+    <updated>2018-08-07T08:05:13.993Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Ubuntu安装JDK"><a href="#Ubuntu安装JDK" class="headerlink" title="Ubuntu安装JDK"></a>Ubuntu安装JDK</h2><ol><li><p>更新软件包列表</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure></li><li><p>安装openjdk-8-jdk</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openjdk-8-jdk</span><br></pre></td></tr></table></figure></li><li><p>查看Java版本</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure></li></ol><h2 id="Mac安装Java"><a href="#Mac安装Java" class="headerlink" title="Mac安装Java"></a>Mac安装Java</h2><h3 id="JRE和JDK的区别"><a href="#JRE和JDK的区别" class="headerlink" title="JRE和JDK的区别"></a>JRE和JDK的区别</h3><ul><li>JRE： Java Runtime Environment</li><li>JDK：Java Development Kit</li><li>JRE顾名思义是java运行时环境，包含了java虚拟机，java基础类库。是使用java语言编写的程序运行所需要的软件环境，是提供给想运行java程序的用户使用的。</li><li>JDK顾名思义是java开发工具包，是程序员使用java语言编写java程序所需的开发工具包，是提供给程序员使用的。JDK包含了JRE，同时还包含了编译java源码的编译器javac，还包含了很多java程序调试和分析的工具：jconsole，jvisualvm等工具软件，还包含了java程序编写所需的文档和demo例子程序。所以JDK的包比JRE大很多。</li><li>如果你需要运行java程序，只需安装JRE就可以了</li><li>如果你需要编写java程序，需要安装JDK。</li><li>JRE根据不同操作系统（如：windows，linux等）和不同JRE提供商（IBM,ORACLE等）有很多版本，最常用的是Oracle公司收购SUN公司的JRE版本。</li></ul><h3 id="安装JRE-JDK"><a href="#安装JRE-JDK" class="headerlink" title="安装JRE/JDK"></a>安装JRE/JDK</h3><ul><li>JRE下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html</a></li><li>JDK下载地址：<br><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a><br>Mac下载对应的包，下载完成后直接安装即可</li></ul><h3 id="环境变量配置"><a href="#环境变量配置" class="headerlink" title="环境变量配置"></a>环境变量配置</h3><ol><li>JRE:如果安装的是JRE，那么在Mac上默认的路径是<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home</span><br></pre></td></tr></table></figure></li></ol><ul><li>配置环境变量（vi ~/.bash_profile）：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home</span><br><span class="line">PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">export JAVA_HOME</span><br><span class="line">export PATH</span><br></pre></td></tr></table></figure></li></ul><ol><li>JDK:如果安装的是JDK，那么在Mac上默认的路径是<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Library/Java/JavaVirtualMachines/</span><br></pre></td></tr></table></figure></li></ol><ul><li>配置环境变量（vi ~/.bash_profile）：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home</span><br><span class="line">PATH=$JAVA_HOME/bin:$PATH:.</span><br><span class="line">CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:.</span><br><span class="line">export JAVA_HOME</span><br><span class="line">export PATH</span><br><span class="line">export CLASSPATH</span><br></pre></td></tr></table></figure></li></ul><h2 id="安装Jmeter"><a href="#安装Jmeter" class="headerlink" title="安装Jmeter"></a>安装Jmeter</h2><ol><li><p>下载Jmeter4.0</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -c http://www-us.apache.org/dist//jmeter/binaries/apache-jmeter-4.0.tgz</span><br></pre></td></tr></table></figure></li><li><p>解压</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xf apache-jmeter-4.0.tgz</span><br></pre></td></tr></table></figure></li><li><p>运行sample</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apache-jmeter-4.0/bin/./jmeter -n -t apache-jmeter-4.0/extras/Test.jmx</span><br></pre></td></tr></table></figure></li></ol><h2 id="Jmeter基础"><a href="#Jmeter基础" class="headerlink" title="Jmeter基础"></a>Jmeter基础</h2><h3 id="Jmeter环境变量配置"><a href="#Jmeter环境变量配置" class="headerlink" title="Jmeter环境变量配置"></a>Jmeter环境变量配置</h3><ul><li>MAC版本,具体路径请根据自己本地路径进行替换<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JMETER_HOME=/Users/xxx/apache-jmeter-4.0</span><br><span class="line">export CLASSPATH=.:$JMETER_HOME/lib/ext/ApacheJMeter_core.jar:$JMETER_HOME/lib/jorphan.jar</span><br><span class="line">export PATH=$JMETER_HOME/bin:$PATH</span><br></pre></td></tr></table></figure></li></ul><h3 id="Jmeter基础-1"><a href="#Jmeter基础-1" class="headerlink" title="Jmeter基础"></a>Jmeter基础</h3><p>请看Jmeter基础系列文章。</p>]]></content>
+    
+    <summary type="html">
+    
+      Ubuntu/Mac安装jmeter进行性能测试
+    
+    </summary>
+    
+      <category term="性能测试" scheme="http://vwin.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/"/>
+    
+    
+      <category term="jmeter" scheme="http://vwin.github.io/tags/jmeter/"/>
+    
+      <category term="ubuntu" scheme="http://vwin.github.io/tags/ubuntu/"/>
+    
+      <category term="jdk" scheme="http://vwin.github.io/tags/jdk/"/>
+    
+      <category term="jre" scheme="http://vwin.github.io/tags/jre/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>tmux 配置&amp;快捷键</title>
+    <link href="http://vwin.github.io/2018/07/17/tmux-%E9%85%8D%E7%BD%AE&amp;%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
+    <id>http://vwin.github.io/2018/07/17/tmux-配置&amp;快捷键/</id>
+    <published>2018-07-17T02:52:52.000Z</published>
+    <updated>2018-08-07T08:04:23.404Z</updated>
+    
+    <content type="html"><![CDATA[<p>tmux基本配置&amp;快捷键</p><h2 id="Tmux基本配置"><a href="#Tmux基本配置" class="headerlink" title="Tmux基本配置"></a>Tmux基本配置</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">set -g prefix C-a <span class="comment">#</span></span><br><span class="line">unbind C-b <span class="comment"># C-b即Ctrl+b键，unbind意味着解除绑定</span></span><br><span class="line">bind C-a send-prefix <span class="comment"># 绑定Ctrl+a为新的指令前缀</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从tmux v1.6版起，支持设置第二个指令前缀</span></span><br><span class="line">set-option -g prefix2 ` <span class="comment"># 设置一个不常用的`键作为指令前缀，按键更快些</span></span><br><span class="line">set-option -g mouse on <span class="comment"># 等同于以上4个指令的效果</span></span><br><span class="line">unbind <span class="string">'"'</span></span><br><span class="line">bind - splitw -v -c <span class="string">'#&#123;pane_current_path&#125;'</span> <span class="comment"># 垂直方向新增面板，默认进入当前目录</span></span><br><span class="line">unbind %</span><br><span class="line">bind | splitw -h -c <span class="string">'#&#123;pane_current_path&#125;'</span> <span class="comment"># 水平方向新增面板，默认进入当前目录</span></span><br><span class="line"><span class="comment"># 绑定快捷键为r,读取配置文件</span></span><br><span class="line">bind r source-file ~/.tmux.conf \; display-message <span class="string">"Config reloaded.."</span></span><br></pre></td></tr></table></figure><h2 id="Tmux快捷键"><a href="#Tmux快捷键" class="headerlink" title="Tmux快捷键"></a>Tmux快捷键</h2><p>启动新会话：<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux [new -s 会话名 -n 窗口名]</span><br></pre></td></tr></table></figure><p></p><p>恢复会话：<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux at [-t 会话名]</span><br></pre></td></tr></table></figure><p></p><p>列出所有会话：<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux ls</span><br></pre></td></tr></table></figure><p></p><p>关闭会话：<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux kill-session -t 会话名</span><br></pre></td></tr></table></figure><p></p><p>关闭所有会话：<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux ls | grep : | cut -d. -f1 | awk '&#123;print substr($1, 0, length($1)-1)&#125;' | xargs kill</span><br></pre></td></tr></table></figure><p></p>]]></content>
+    
+    <summary type="html">
+    
+      tmux 配置整理 &amp; 快捷键
+    
+    </summary>
+    
+      <category term="工具" scheme="http://vwin.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="tmux" scheme="http://vwin.github.io/tags/tmux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>豆瓣电影评论生成词云</title>
+    <link href="http://vwin.github.io/2018/07/13/%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1%E8%AF%84%E8%AE%BA%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/"/>
+    <id>http://vwin.github.io/2018/07/13/豆瓣电影评论生成词云/</id>
+    <published>2018-07-13T09:33:12.000Z</published>
+    <updated>2018-08-07T08:04:04.131Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="抓取豆瓣电影评论并生成词云"><a href="#抓取豆瓣电影评论并生成词云" class="headerlink" title="抓取豆瓣电影评论并生成词云"></a>抓取豆瓣电影评论并生成词云</h2><a id="more"></a><h2 id="目标：抓取豆瓣电影评论生成词云"><a href="#目标：抓取豆瓣电影评论生成词云" class="headerlink" title="目标：抓取豆瓣电影评论生成词云"></a>目标：抓取豆瓣电影评论生成词云</h2><h3 id="第一步：抓取评论"><a href="#第一步：抓取评论" class="headerlink" title="第一步：抓取评论"></a>第一步：抓取评论</h3><p>代码如下。具体见注释<br></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getCommentsById</span><span class="params">(movieId, pageNum)</span>:</span></span><br><span class="line">    eachCommentList = []</span><br><span class="line">    <span class="comment"># 抓取评论的页数</span></span><br><span class="line">    <span class="keyword">if</span> pageNum &gt; <span class="number">0</span>:</span><br><span class="line">    </span><br><span class="line">        start = (pageNum - <span class="number">1</span>) * <span class="number">20</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">    <span class="comment"># 豆瓣电影评论的地址</span></span><br><span class="line">    requrl = (</span><br><span class="line">        <span class="string">"https://movie.douban.com/subject/"</span></span><br><span class="line">        + movieId</span><br><span class="line">        + <span class="string">"/comments"</span></span><br><span class="line">        + <span class="string">"?"</span></span><br><span class="line">        + <span class="string">"start="</span></span><br><span class="line">        + str(start)</span><br><span class="line">        + <span class="string">"&amp;limit=20"</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 抓取</span></span><br><span class="line">        resp = requests.get(requrl)</span><br><span class="line">        <span class="comment"># 用utf-8格式化返回结果</span></span><br><span class="line">        html_data = resp.content.decode(<span class="string">"utf-8"</span>)</span><br><span class="line">        <span class="comment"># 用beautifulsoup处理返回结果，指定parser为html</span></span><br><span class="line">        soup = bs(html_data, <span class="string">"html.parser"</span>)</span><br><span class="line">        <span class="comment"># 获取评论</span></span><br><span class="line">        comment_div_lits = soup.find_all(<span class="string">"div"</span>, class_=<span class="string">"comment"</span>)</span><br><span class="line">        <span class="comment"># 将评论写入数组</span></span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> comment_div_lits:</span><br><span class="line">            <span class="keyword">if</span> item.find_all(<span class="string">"p"</span>)[<span class="number">0</span>].string <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">                eachCommentList.append(item.find_all(<span class="string">"p"</span>)[<span class="number">0</span>].string)</span><br><span class="line">    <span class="comment"># 捕获异常</span></span><br><span class="line">    <span class="keyword">except</span> RequestException <span class="keyword">as</span> e:</span><br><span class="line">        print(<span class="string">"请求问题，原因：%s"</span> % e)</span><br><span class="line">    <span class="comment"># 返回评论数组</span></span><br><span class="line">    <span class="keyword">return</span> eachCommentList</span><br></pre></td></tr></table></figure><p></p><h3 id="第二步：将抓取的评论转换为字符串"><a href="#第二步：将抓取的评论转换为字符串" class="headerlink" title="第二步：将抓取的评论转换为字符串"></a>第二步：将抓取的评论转换为字符串</h3><p>代码如下。具体见注释<br></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">commentList = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    num = i + <span class="number">1</span></span><br><span class="line">    <span class="comment"># 使用上面的方法获取评论列表</span></span><br><span class="line">    commentList_temp = getCommentsById(movieId=movieId, pageNum=num)</span><br><span class="line">    commentList.append(commentList_temp)</span><br><span class="line">    <span class="comment"># 将列表中的数据转换为字符串</span></span><br><span class="line">comments = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> range(len(commentList)):</span><br><span class="line">    <span class="comment"># print(commentList[k])</span></span><br><span class="line">    <span class="comment"># 去掉空格等</span></span><br><span class="line">    <span class="keyword">for</span> m <span class="keyword">in</span> range(len(commentList[k])):</span><br><span class="line">        comments = comments + str(commentList[k][m]).strip()</span><br></pre></td></tr></table></figure><p></p><h3 id="第三步：使用正则去掉标点"><a href="#第三步：使用正则去掉标点" class="headerlink" title="第三步：使用正则去掉标点"></a>第三步：使用正则去掉标点</h3><p>代码如下。具体见注释<br></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用正则去掉标点</span></span><br><span class="line">filtrate = re.compile(<span class="string">r"[^\u4E00-\u9FA5]"</span>)  <span class="comment"># 提取中文，过滤掉非中文字符</span></span><br><span class="line">filtered_str = filtrate.sub(<span class="string">r""</span>, comments)  <span class="comment"># replace</span></span><br></pre></td></tr></table></figure><p></p><h3 id="第四步：使用结巴分词进行中文分词"><a href="#第四步：使用结巴分词进行中文分词" class="headerlink" title="第四步：使用结巴分词进行中文分词"></a>第四步：使用结巴分词进行中文分词</h3><p>代码如下。具体见注释<br></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用结巴分词进行中文分词</span></span><br><span class="line">segment = jieba.lcut(filtered_str)</span><br><span class="line">words_df = pd.DataFrame(&#123;<span class="string">"segment"</span>: segment&#125;)</span><br></pre></td></tr></table></figure><p></p><h3 id="第五步：去掉停用词"><a href="#第五步：去掉停用词" class="headerlink" title="第五步：去掉停用词"></a>第五步：去掉停用词</h3><p>代码如下。具体见注释<br></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 去掉停用词。</span></span><br><span class="line"><span class="comment"># 停用词是指在信息检索中，为节省存储空间和提高搜索效率</span></span><br><span class="line"><span class="comment"># 在处理自然语言数据（或文本）之前或之后会自动过滤掉某些字或词</span></span><br><span class="line"><span class="comment"># 这些字或词即被称为Stop Words（停用词）。</span></span><br><span class="line">stopwords = pd.read_csv(</span><br><span class="line">    <span class="string">"./stopwords.txt"</span>,</span><br><span class="line">    index_col=<span class="keyword">False</span>,</span><br><span class="line">    quoting=<span class="number">3</span>,</span><br><span class="line">    sep=<span class="string">"t"</span>,</span><br><span class="line">    names=[<span class="string">"stopword"</span>],</span><br><span class="line">    encoding=<span class="string">"utf-8"</span>,</span><br><span class="line">)</span><br><span class="line">words_df = words_df[~words_df.segment.isin(stopwords.stopword)]</span><br></pre></td></tr></table></figure><p></p><h3 id="第六步：统计词频"><a href="#第六步：统计词频" class="headerlink" title="第六步：统计词频"></a>第六步：统计词频</h3><p>代码如下。具体见注释<br></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 统计词频</span></span><br><span class="line">words_stat = words_df.groupby(by=[<span class="string">"segment"</span>])[<span class="string">"segment"</span>].agg(&#123;<span class="string">"计数"</span>: numpy.size&#125;)</span><br><span class="line">words_stat = words_stat.reset_index().sort_values(by=[<span class="string">"计数"</span>], ascending=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure><p></p><h3 id="第七步：用词云进行显示"><a href="#第七步：用词云进行显示" class="headerlink" title="第七步：用词云进行显示"></a>第七步：用词云进行显示</h3><p>代码如下。具体见注释<br></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用词云进行显示</span></span><br><span class="line">wordcloud = WordCloud(</span><br><span class="line">    font_path=<span class="string">"./simkai.ttf"</span>,</span><br><span class="line">    background_color=<span class="string">"white"</span>,</span><br><span class="line">    max_font_size=<span class="number">80</span>,</span><br><span class="line">    width=<span class="number">1000</span>,</span><br><span class="line">    height=<span class="number">860</span>,</span><br><span class="line">    margin=<span class="number">2</span>,</span><br><span class="line">)</span><br><span class="line">word_frequence = &#123;x[<span class="number">0</span>]: x[<span class="number">1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> words_stat.head(<span class="number">1000</span>).values&#125;</span><br><span class="line"></span><br><span class="line">wordcloud = wordcloud.fit_words(word_frequence)</span><br><span class="line">plt.imshow(wordcloud)</span><br><span class="line">plt.axis(<span class="string">"off"</span>)</span><br><span class="line">plt.show(block=<span class="keyword">False</span>)</span><br><span class="line">img_name = <span class="string">"./"</span> + movieName + <span class="string">".jpg"</span></span><br><span class="line">wordcloud.to_file(img_name)</span><br></pre></td></tr></table></figure><p></p><h3 id="End"><a href="#End" class="headerlink" title="End"></a>End</h3><p><a href="https://github.com/vwin/douban-movie-wordcloud" target="_blank" rel="noopener">源码github地址</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;抓取豆瓣电影评论并生成词云&quot;&gt;&lt;a href=&quot;#抓取豆瓣电影评论并生成词云&quot; class=&quot;headerlink&quot; title=&quot;抓取豆瓣电影评论并生成词云&quot;&gt;&lt;/a&gt;抓取豆瓣电影评论并生成词云&lt;/h2&gt;
+    
+    </summary>
+    
+      <category term="Python" scheme="http://vwin.github.io/categories/Python/"/>
+    
+    
+      <category term="豆瓣" scheme="http://vwin.github.io/tags/%E8%B1%86%E7%93%A3/"/>
+    
+      <category term="电影" scheme="http://vwin.github.io/tags/%E7%94%B5%E5%BD%B1/"/>
+    
+      <category term="词云" scheme="http://vwin.github.io/tags/%E8%AF%8D%E4%BA%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://vwin.github.io/2018/02/26/hello-world/"/>
+    <id>http://vwin.github.io/2018/02/26/hello-world/</id>
+    <published>2018-02-26T07:52:01.635Z</published>
+    <updated>2018-07-25T02:41:21.486Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br><a id="more"></a></p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br><span class="line">or</span><br><span class="line">$ hexo new post <span class="string">"test"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br><span class="line">or</span><br><span class="line">$ hexo s</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br><span class="line">or</span><br><span class="line">$ hexo g</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br><span class="line">or</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://vwin.github.io/categories/Hexo/"/>
+    
+    
+      <category term="hexo" scheme="http://vwin.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+</feed>
