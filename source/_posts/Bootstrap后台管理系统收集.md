@@ -96,4 +96,5 @@ npm run build
 该后台非常好用，十分钟就可以搭建起一个简单的管理后台
 ## laravel-admin
 该管理后台非常强大，使用Laravel AdminLTE开发，可以快速实现增删改查功能及角色管理。
+
 项目：[GitHub地址: z-song/laravel-admin](https://almsaeedstudio.com/)

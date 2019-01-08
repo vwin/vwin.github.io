@@ -51,3 +51,6 @@ tmux kill-session -t 会话名
 ```shell
 tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, length($1)-1)}' | xargs kill
 ```
+
+# Tmux 快捷键
+![](https://ws2.sinaimg.cn/large/006tNbRwly1fxzd6et3t8j30l80f0wi7.jpg)

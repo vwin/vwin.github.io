@@ -114,7 +114,10 @@ id -nG
 ```
 
 输出：
+```shell
 username sudo docker
+```
+
 如果您需要将用户添加到docker您未登录的组中，请使用以下方式明确声明该用户名：
 ```shell
 sudo usermod -aG docker username
@@ -123,14 +126,16 @@ sudo usermod -aG docker username
 
 ## 使用Docker命令
 使用docker包括传递一系列选项和命令，后跟参数。语法采用以下形式：
+```shell
 docker [option] [command] [arguments]
+```
 要查看所有可用的子命令，请键入：
 ```shell
 docker
 ```
 
 从Docker 18开始，可用子命令的完整列表包括：
-
+```shell
 Output
 
   attach      Attach local standard input, output, and error streams to a running container
@@ -173,6 +178,7 @@ Output
   update      Update configuration of one or more containers
   version     Show the Docker version information
   wait        Block until one or more containers stop, then print their exit codes
+```
 要查看特定命令可用的选项，请键入：
 ```shell
 docker docker-subcommand --help
@@ -446,12 +452,13 @@ a3b5c80a4eba: Preparing
 3ce512daaf78: Preparing
 7aae4540b42d: Waiting
 unauthorized: authentication required
-登录docker login并重复推送尝试。然后验证它是否存在于Docker Hub存储库页面上。
 ```
+登录docker login并重复推送尝试。然后验证它是否存在于Docker Hub存储库页面上。
+
 您现在可以使用将图像拉到新计算机并使用它来运行新容器。
 ```shell
 docker pull sammy/ubuntu-node<^>
 ```
 
 ## 结论
-在本教程中，您安装了Docker，使用了图像和容器，并将修改后的图像推送到Docker Hub。现在您已了解基础知识，请浏览DigitalOcean社区中的其他Docker教程。
+在本教程中，您安装了Docker，使用了镜像和容器，并将修改后的镜像推送到Docker Hub。现在您已了解基础知识，请浏览DigitalOcean社区中的其他Docker教程。

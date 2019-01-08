@@ -36,7 +36,7 @@ sandbox; default-src 'none'; img-src 'self'; style-src 'self';
 
 ## 解决
 ### 方法一
-修改CSP(Content Security Policy)的默认配置，到Jenkins系统管理à脚本命令行，执行以下Groovy命令，然后点击运行。配置完成后，重新构建原有项目，HTML页面即可正常显示。
+修改CSP(Content Security Policy)的默认配置，到Jenkins系统管理->脚本命令行，执行以下Groovy命令，然后点击运行。配置完成后，重新构建原有项目，HTML页面即可正常显示。
 ```shell
 System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
 ```
