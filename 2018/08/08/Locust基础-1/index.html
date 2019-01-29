@@ -1,0 +1,317 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0"><link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"6.3.0",sidebar:{position:"left",display:"hide",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!1,fastclick:!1,lazyload:!1,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><meta name="description" content="介绍Locust 官方网站：https://www.locust.io/An open source load testing tool.一个开源性能测试工具。define user behaviour with python code, and swarm your system with millions of simultaneous users.使用 Python 代码来定义用户行为。用它"><meta name="keywords" content="性能测试,locust"><meta property="og:type" content="article"><meta property="og:title" content="Locust基础-1"><meta property="og:url" content="http://vwin.github.io/2018/08/08/Locust基础-1/index.html"><meta property="og:site_name" content="V&#39;s BLOG"><meta property="og:description" content="介绍Locust 官方网站：https://www.locust.io/An open source load testing tool.一个开源性能测试工具。define user behaviour with python code, and swarm your system with millions of simultaneous users.使用 Python 代码来定义用户行为。用它"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fyt89j9tb3j31bd0u0tf7.jpg"><meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1fyt953kd2lj30zb0mjwgt.jpg"><meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fyt95m2zbaj30z90jlmza.jpg"><meta property="og:updated_time" content="2019-01-08T06:44:50.916Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Locust基础-1"><meta name="twitter:description" content="介绍Locust 官方网站：https://www.locust.io/An open source load testing tool.一个开源性能测试工具。define user behaviour with python code, and swarm your system with millions of simultaneous users.使用 Python 代码来定义用户行为。用它"><meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fyt89j9tb3j31bd0u0tf7.jpg"><link rel="alternate" href="/atom.xml" title="V's BLOG" type="application/atom+xml"><link rel="canonical" href="http://vwin.github.io/2018/08/08/Locust基础-1/"><script type="text/javascript" id="page.configurations">CONFIG.page={sidebar:""}</script><title>Locust基础-1 | V's BLOG</title><noscript><style type="text/css">.sidebar-inner,.use-motion .brand,.use-motion .collection-title,.use-motion .comments,.use-motion .menu-item,.use-motion .motion-element,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .logo,.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">V's BLOG</span> <span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle">上不知天文，下不晓地理</p></div><div class="site-nav-toggle"><button aria-label="切换导航栏"><span class="btn-bar"></span> <span class="btn-bar"></span> <span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i><br>公益 404</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i> </span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://vwin.github.io/2018/08/08/Locust基础-1/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="V"><meta itemprop="description" content="上不知天文，下不晓地理"><meta itemprop="image" content="/images/my.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="V's BLOG"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Locust基础-1</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2018-08-08 18:39:30" itemprop="dateCreated datePublished" datetime="2018-08-08T18:39:30+08:00">2018-08-08</time> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-calendar-check-o"></i> </span><span class="post-meta-item-text">更新于</span> <time title="修改时间：2019-01-08 14:44:50" itemprop="dateModified" datetime="2019-01-08T14:44:50+08:00">2019-01-08</time> </span><span class="post-category"><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-folder-o"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/性能测试/" itemprop="url" rel="index"><span itemprop="name">性能测试</span></a></span> </span><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-eye"></i> 阅读次数： <span class="busuanzi-value" id="busuanzi_value_page_pv"></span></span><div class="post-symbolscount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i> </span><span class="post-meta-item-text">本文字数：</span> <span title="本文字数">11k</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i> </span><span class="post-meta-item-text">阅读时长 &asymp;</span> <span title="阅读时长">10 分钟</span></div></div></header><div class="post-body" itemprop="articleBody"><h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>Locust 官方网站：<a href="https://www.locust.io/" target="_blank" rel="noopener">https://www.locust.io/</a><br>An open source load testing tool.<br>一个开源性能测试工具。<br>define user behaviour with python code, and swarm your system with millions of simultaneous users.<br>使用 Python 代码来定义用户行为。用它可以模拟百万计的并发用户访问你的系统。<br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fyt89j9tb3j31bd0u0tf7.jpg" alt=""><br><a id="more"></a></p><ol><li><p>LoadRunner 是非常有名的商业性能测试工具，功能非常强大。使用也比较复杂，目前大多介绍性能测试的书籍都以该工具为基础，甚至有些书整本都在介绍 LoadRunner 的使用。</p></li><li><p>Jmeter 同样是非常有名的开源性能测试工具，功能也很完善，在本书中介绍了它作为接口测试工具的使用。但实际上，它是一个标准的性能测试工具。关于Jmeter相关的资料也非常丰富，它的官方文档也很完善。</p></li><li><p>Locust 同样是性能测试工具，虽然官方这样来描述它 “An open source load testing tool.” 。但其它和前面两个工具有着较大的不同。相比前面两个工具，功能上要差上不少，但它也并非优点全无。</p><ul><li>Locust 完全基本 Python 编程语言，采用 Pure Python 描述测试脚本，并且 HTTP 请求完全基于 Requests 库。除了 HTTP/HTTPS 协议，Locust 也可以测试其它协议的系统，只需要采用Python调用对应的库进行请求描述即可。</li><li>LoadRunner 和 Jmeter 这类采用进程和线程的测试工具，都很难在单机上模拟出较高的并发压力。Locust 的并发机制摒弃了进程和线程，采用协程（gevent）的机制。协程避免了系统级资源调度，由此可以大幅提高单机的并发能力。</li></ul></li></ol><p>正是基于这样的特点，使我选择使用Locust工具来做性能测试，另外一个原因是它可以让我们换一种方式认识性能测试，可能更容易看清性能测试的本质。</p><h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="pip安装"><a href="#pip安装" class="headerlink" title="pip安装"></a>pip安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install locust</span><br></pre></td></tr></table></figure><h2 id="Git安装"><a href="#Git安装" class="headerlink" title="Git安装"></a>Git安装</h2><p>GitHub项目地址：<a href="https://github.com/locustio/locust/" target="_blank" rel="noopener">https://github.com/locustio/locust/</a></p><p>将项目克隆下来，通过Python 执行 setup.py 文件</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py install</span><br></pre></td></tr></table></figure><p>最后，检查是否安装成功:<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locust --help</span><br></pre></td></tr></table></figure><p></p><h2 id="依赖分析"><a href="#依赖分析" class="headerlink" title="依赖分析"></a>依赖分析</h2><ul><li>gevent 是在 Python 中实现协程的一个第三方库。协程，又称微线程（Coroutine）。使用gevent可以获得极高的并发性能。</li><li>flask 是 Python 的一个 Web 开发框架。</li><li>Requests 用来做 HTTP 接口测试。</li><li>msgpack-python 是一种快速、紧凑的二进制序列化格式，适用于类似JSON的数据。</li><li>six 提供了一些简单的工具用来封装 Python2 和 Python3 之间的差异性。</li><li>pyzmq 如果你打算运行 Locust 分布在多个进程/机器，建议你安装pyzmq。</li></ul><p>当我们在安装 Locust 时，它会检测我们当前的 Python 环境是否已经安装了这些库，如果没有安装，它会先把这些库一一装上。并且对这些库版本有要求，有些是必须等于某版本，有些是大于某版本。我们也可以事先把这些库全部按要求装好，再安装Locust时就会快上许多。</p><h1 id="创建性能测试"><a href="#创建性能测试" class="headerlink" title="创建性能测试"></a>创建性能测试</h1><h2 id="写脚本"><a href="#写脚本" class="headerlink" title="写脚本"></a>写脚本</h2><p>创建 load_test.py 文件，通过 Python 编写性能测试脚本。<br></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> locust <span class="keyword">import</span> HttpLocust, TaskSet, task</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义用户行为</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserBehavior</span><span class="params">(TaskSet)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @task</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">baidu_index</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.client.get(<span class="string">"/"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WebsiteUser</span><span class="params">(HttpLocust)</span>:</span></span><br><span class="line">    task_set = UserBehavior</span><br><span class="line">    min_wait = <span class="number">3000</span></span><br><span class="line">    max_wait = <span class="number">6000</span></span><br></pre></td></tr></table></figure><p></p><ul><li>UserBehavior类继承TaskSet类，用于描述用户行为。</li><li>baidu_index() 方法表示一个用户为行，访问百度首页。使用@task装饰该方法为一个事务。client.get()用于指请求的路径“/”，因为是百度首页，所以指定为根路径。</li><li>WebsiteUser类用于设置性能测试。<ul><li>task_set ：指向一个定义的用户行为类。</li><li>min_wait ：执行事务之间用户等待时间的下界（单位：毫秒）。</li><li>max_wait ：执行事务之间用户等待时间的上界（单位：毫秒）。</li></ul></li></ul><h2 id="启动性能测试"><a href="#启动性能测试" class="headerlink" title="启动性能测试"></a>启动性能测试</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span> locust -f .\load_test.py --host=https://www.baidu.com</span><br><span class="line"></span><br><span class="line">[2017-10-16 16:44:40,839] DESKTOP-SMGQBBM/INFO/locust.main: Starting web monitor at *:8089</span><br><span class="line">[2017-10-16 16:44:40,842] DESKTOP-SMGQBBM/INFO/locust.main: Starting Locust 0.8</span><br></pre></td></tr></table></figure><ul><li>-f 指定性能测试脚本文件。</li><li>–host 指定被测试应用的URL的地址，注意访问百度使用的HTTPS协议。</li><li>通过浏览器访问：<a href="http://localhost:8089（Locust启动网络监控器，默认为端口号为" target="_blank" rel="noopener">http://localhost:8089（Locust启动网络监控器，默认为端口号为</a>: 8089）<br><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fyt953kd2lj30zb0mjwgt.jpg" alt=""></li><li>Number of users to simulate 设置模拟用户数。</li><li>Hatch rate（users spawned/second） 每秒产生（启动）的虚拟用户数。</li></ul><p>点击 “Start swarming” 按钮，开始运行性能测试。<br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fyt95m2zbaj30z90jlmza.jpg" alt=""><br>性能测试参数</p><ol><li>Type： 请求的类型，例如GET/POST。</li><li>Name：请求的路径。这里为百度首页，即：<a href="https://www.baidu.com/" target="_blank" rel="noopener">https://www.baidu.com/</a></li><li>request：当前请求的数量。</li><li>fails：当前请求失败的数量。</li><li>Median：中间值，单位毫秒，一半的服务器响应时间低于该值，而另一半高于该值。</li><li>Average：平均值，单位毫秒，所有请求的平均响应时间。</li><li>Min：请求的最小服务器响应时间，单位毫秒。</li><li>Max：请求的最大服务器响应时间，单位毫秒。</li><li>Content Size：单个请求的大小，单位字节。</li><li>reqs/sec：是每秒钟请求的个数。</li></ol><h1 id="no-web模式"><a href="#no-web模式" class="headerlink" title="no-web模式"></a>no-web模式</h1><p>以上一节的 baidu 首页测试（load_test.py）为例 通过 no-web 模式运行测试。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span> locust -f load_test.py --host=https://www.baidu.com --no-web -c 10 -r 2 -t 1m</span><br><span class="line"></span><br><span class="line">[2017-10-30 22:17:30,292] DESKTOP-SMGQBBM/INFO/locust.main: Run time limit set to 60 seconds</span><br><span class="line">[2017-10-30 22:17:30,302] DESKTOP-SMGQBBM/INFO/locust.main: Starting Locust 0.8</span><br><span class="line">[2017-10-30 22:17:30,302] DESKTOP-SMGQBBM/INFO/locust.runners: Hatching and swarming 10 clients at the rate 2 clients/s...</span><br><span class="line"> Name                                                          # reqs      # fails     Avg     Min     Max  |  Median   req/s</span><br><span class="line"></span><br><span class="line">....</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> [2017-10-30 22:18:30,301] DESKTOP-SMGQBBM/INFO/locust.main: Time limit reached. Stopping Locust.</span><br><span class="line"> [2017-10-30 22:18:30,302] DESKTOP-SMGQBBM/INFO/locust.main: Shutting down (exit code 0), bye.</span><br><span class="line">  Name                                                          # reqs      # fails     Avg     Min     Max  |  Median   req/s</span><br><span class="line"> --------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">  GET /                                                            117     0(0.00%)      31      17      96  |      28    2.10</span><br><span class="line"> --------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">  Total                                                            117     0(0.00%)                                       2.10</span><br><span class="line"></span><br><span class="line"> Percentage of the requests completed within given times</span><br><span class="line">  Name                                                           # reqs    50%    66%    75%    80%    90%    95%    98%    99%   100%</span><br><span class="line"> --------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">  GET /                                                             117     28     30     36     37     49     62     69     72     96</span><br><span class="line"> --------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">  Total                                                             117     28     30     36     37     49     62     69     72     96</span><br></pre></td></tr></table></figure><p>启动参数：</p><ul><li>–no-web 表示不使用Web界面运行测试。</li><li>-c 设置虚拟用户数。</li><li>-r 设置每秒启动虚拟用户数。</li><li>-t 设置设置运行时间。(在有些locust版本中可能不支持该参数，改用-n参数可以指定发送请求数量，具体的可以通过locust –help查看)</li></ul><h1 id="Locust参数"><a href="#Locust参数" class="headerlink" title="Locust参数"></a>Locust参数</h1><h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><p>打开命令提示符（或Linux终端），输入 locust –help 。<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span> locust --help</span><br><span class="line">Usage: locust [options] [LocustClass [LocustClass2 ... ]]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -h, --help            show this help message and exit</span><br><span class="line">  -H HOST, --host=HOST  Host to load test in the following format:</span><br><span class="line">                        http://10.21.32.33</span><br><span class="line">  --web-host=WEB_HOST   Host to bind the web interface to. Defaults to '' (all</span><br><span class="line">                        interfaces)</span><br><span class="line">  -P PORT, --port=PORT, --web-port=PORT</span><br><span class="line">                        Port on which to run web host</span><br><span class="line">  -f LOCUSTFILE, --locustfile=LOCUSTFILE</span><br><span class="line">                        Python module file to import, e.g. '../other.py'.</span><br><span class="line">                        Default: locustfile</span><br><span class="line">  --csv=CSVFILEBASE, --csv-base-name=CSVFILEBASE</span><br><span class="line">                        Store current request stats to files in CSV format.</span><br><span class="line">  --master              Set locust to run in distributed mode with this</span><br><span class="line">                        process as master</span><br><span class="line">  --slave               Set locust to run in distributed mode with this</span><br><span class="line">                        process as slave</span><br><span class="line">  --master-host=MASTER_HOST</span><br><span class="line">                        Host or IP address of locust master for distributed</span><br><span class="line">                        load testing. Only used when running with --slave.</span><br><span class="line">                        Defaults to 127.0.0.1.</span><br><span class="line">  --master-port=MASTER_PORT</span><br><span class="line">                        The port to connect to that is used by the locust</span><br><span class="line">                        master for distributed load testing. Only used when</span><br><span class="line">                        running with --slave. Defaults to 5557. Note that</span><br><span class="line">                        slaves will also connect to the master node on this</span><br><span class="line">                        port + 1.</span><br><span class="line">  --master-bind-host=MASTER_BIND_HOST</span><br><span class="line">                        Interfaces (hostname, ip) that locust master should</span><br><span class="line">                        bind to. Only used when running with --master.</span><br><span class="line">                        Defaults to * (all available interfaces).</span><br><span class="line">  --master-bind-port=MASTER_BIND_PORT</span><br><span class="line">                        Port that locust master should bind to. Only used when</span><br><span class="line">                        running with --master. Defaults to 5557. Note that</span><br><span class="line">                        Locust will also use this port + 1, so by default the</span><br><span class="line">                        master node will bind to 5557 and 5558.</span><br><span class="line">  --expect-slaves=EXPECT_SLAVES</span><br><span class="line">                        How many slaves master should expect to connect before</span><br><span class="line">                        starting the test (only when --no-web used).</span><br><span class="line">  --no-web              Disable the web interface, and instead start running</span><br><span class="line">                        the test immediately. Requires -c and -r to be</span><br><span class="line">                        specified.</span><br><span class="line">  -c NUM_CLIENTS, --clients=NUM_CLIENTS</span><br><span class="line">                        Number of concurrent Locust users. Only used together</span><br><span class="line">                        with --no-web</span><br><span class="line">  -r HATCH_RATE, --hatch-rate=HATCH_RATE</span><br><span class="line">                        The rate per second in which clients are spawned. Only</span><br><span class="line">                        used together with --no-web</span><br><span class="line">  -t RUN_TIME, --run-time=RUN_TIME</span><br><span class="line">                        Stop after the specified amount of time, e.g. (300s,</span><br><span class="line">                        20m, 3h, 1h30m, etc.). Only used together with --no-</span><br><span class="line">                        web</span><br><span class="line">  -L LOGLEVEL, --loglevel=LOGLEVEL</span><br><span class="line">                        Choose between DEBUG/INFO/WARNING/ERROR/CRITICAL.</span><br><span class="line">                        Default is INFO.</span><br><span class="line">  --logfile=LOGFILE     Path to log file. If not set, log will go to</span><br><span class="line">                        stdout/stderr</span><br><span class="line">  --print-stats         Print stats in the console</span><br><span class="line">  --only-summary        Only print the summary stats</span><br><span class="line">  --no-reset-stats      Do not reset statistics once hatching has been</span><br><span class="line">                        completed</span><br><span class="line">  -l, --list            Show list of possible locust classes and exit</span><br><span class="line">  --show-task-ratio     print table of the locust classes' task execution</span><br><span class="line">                        ratio</span><br><span class="line">  --show-task-ratio-json</span><br><span class="line">                        print json data of the locust classes' task execution</span><br><span class="line">                        ratio</span><br><span class="line">  -V, --version         show program's version number and exit</span><br></pre></td></tr></table></figure><p></p><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><table><thead><tr><th>参数</th><th>说明</th></tr></thead><tbody><tr><td>-h, –help</td><td>查看帮助</td></tr><tr><td>-H HOST, –host=HOST</td><td>指定被测试的主机，采用以格式：<a href="http://10.21.32.33" target="_blank" rel="noopener">http://10.21.32.33</a></td></tr><tr><td>–web-host=WEB_HOST</td><td>指定运行 Locust Web 页面的主机，默认为空 ‘’。</td></tr><tr><td>-P PORT, –port=PORT, –web-port=PORT</td><td>指定 –web-host 的端口，默认是8089</td></tr><tr><td>-f LOCUSTFILE, –locustfile=LOCUSTFILE</td><td>指定运行 Locust 性能测试文件，默认为: locustfile.py</td></tr><tr><td>–csv=CSVFILEBASE, –csv-base-name=CSVFILEBASE</td><td>以CSV格式存储当前请求测试数据。</td></tr><tr><td>–master</td><td>Locust 分布式模式使用，当前节点为 master 节点。</td></tr><tr><td>–slave</td><td>Locust 分布式模式使用，当前节点为 slave 节点。</td></tr><tr><td>–master-host=MASTER_HOST</td><td>分布式模式运行，设置 master 节点的主机或 IP 地址，只在与 –slave 节点一起运行时使用，默认为：127.0.0.1.</td></tr><tr><td>–master-port=MASTER_PORT</td><td>分布式模式运行， 设置 master 节点的端口号，只在与 –slave 节点一起运行时使用，默认为：5557。注意，slave 节点也将连接到这个端口+1 上的 master 节点。</td></tr><tr><td>–master-bind-host=MASTER_BIND_HOST</td><td>Interfaces (hostname, ip) that locust master should bind to. Only used when running with –master. Defaults to * (all available interfaces).</td></tr><tr><td>–master-bind-port=MASTER_BIND_PORT</td><td>Port that locust master should bind to. Only used when running with –master. Defaults to 5557. Note that Locust will also use this port + 1, so by default the master node will bind to 5557 and 5558.</td></tr><tr><td>–expect-slaves=EXPECT_SLAVES</td><td>How many slaves master should expect to connect before starting the test (only when –no-web used).</td></tr><tr><td>–no-web</td><td>no-web 模式运行测试，需要 -c 和 -r 配合使用.</td></tr><tr><td>-c NUM_CLIENTS, –clients=NUM_CLIENTS</td><td>指定并发用户数，作用于 –no-web 模式。</td></tr><tr><td>-r HATCH_RATE, –hatch-rate=HATCH_RATE</td><td>指定每秒启动的用户数，作用于 –no-web 模式。</td></tr><tr><td>-t RUN_TIME, –run-time=RUN_TIME</td><td>设置运行时间, 例如： (300s, 20m, 3h, 1h30m). 作用于 –no-web 模式。</td></tr><tr><td>-L LOGLEVEL, –loglevel=LOGLEVEL</td><td>选择 log 级别（DEBUG/INFO/WARNING/ERROR/CRITICAL）. 默认是 INFO.</td></tr><tr><td>–logfile=LOGFILE</td><td>日志文件路径。如果没有设置，日志将去 stdout/stderr</td></tr><tr><td>–print-stats</td><td>在控制台中打印数据</td></tr><tr><td>–only-summary</td><td>只打印摘要统计</td></tr><tr><td>–no-reset-stats</td><td>Do not reset statistics once hatching has been completed。</td></tr><tr><td>-l, –list</td><td>显示测试类, 配置 -f 参数使用</td></tr><tr><td>–show-task-ratio</td><td>打印 locust 测试类的任务执行比例，配合 -f 参数使用.</td></tr><tr><td>–show-task-ratio-json</td><td>以 json 格式打印 locust 测试类的任务执行比例，配合 -f 参数使用.</td></tr><tr><td>-V, –version</td><td>查看当前 Locust 工具的版本.</td></tr></tbody></table></div><footer class="post-footer"><div class="post-tags"><a href="/tags/性能测试/" rel="tag"># 性能测试</a> <a href="/tags/locust/" rel="tag"># locust</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/08/08/Jmeter性能测试/" rel="next" title="Jmeter性能测试"><i class="fa fa-chevron-left"></i> Jmeter性能测试</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"><a href="/2018/08/08/Locust基础-2/" rel="prev" title="Locust基础-2">Locust基础-2 <i class="fa fa-chevron-right"></i></a></div></div></footer></div></article></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap">站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/my.gif" alt="V"><p class="site-author-name" itemprop="name">V</p><p class="site-description motion-element" itemprop="description">上不知天文，下不晓地理</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">75</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">23</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">119</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate"><i class="fa fa-rss"></i> RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/vwin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a> </span><span class="links-of-author-item"><a href="mailto:kkcrush0@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a></span></div><div class="links-of-blogroll motion-element links-of-blogroll-block"><div class="links-of-blogroll-title"><i class="fa fa-fw fa-link"></i> 友情链接</div><ul class="links-of-blogroll-list"><li class="links-of-blogroll-item"><a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a></li></ul></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pip安装"><span class="nav-number">2.1.</span> <span class="nav-text">pip安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git安装"><span class="nav-number">2.2.</span> <span class="nav-text">Git安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖分析"><span class="nav-number">2.3.</span> <span class="nav-text">依赖分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建性能测试"><span class="nav-number">3.</span> <span class="nav-text">创建性能测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#写脚本"><span class="nav-number">3.1.</span> <span class="nav-text">写脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动性能测试"><span class="nav-number">3.2.</span> <span class="nav-text">启动性能测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#no-web模式"><span class="nav-number">4.</span> <span class="nav-text">no-web模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Locust参数"><span class="nav-number">5.</span> <span class="nav-text">Locust参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看"><span class="nav-number">5.1.</span> <span class="nav-text">查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">5.2.</span> <span class="nav-text">说明</span></a></li></ol></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span> <span class="with-love" id="animate"><i class="fa fa-user"></i> </span><span class="author" itemprop="copyrightHolder">V</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-area-chart"></i> </span><span title="站点总字数">183k</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-coffee"></i> </span><span title="站点阅读时长">2:47</span></div><div class="busuanzi-count"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span class="site-uv" title="总访客量"><i class="fa fa-user"></i> <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> </span><span class="site-pv" title="总访问量"><i class="fa fa-eye"></i> <span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span></div></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script><script src="/lib/bookmark/bookmark.min.js?v=1.0"></script><script type="text/javascript">bookmark.scrollToMark("auto","#更多")</script><style>.copy-btn{display:inline-block;padding:6px 12px;font-size:13px;font-weight:700;line-height:20px;color:#333;white-space:nowrap;vertical-align:middle;cursor:pointer;background-color:#eee;background-image:linear-gradient(#fcfcfc,#eee);border:1px solid #d5d5d5;border-radius:3px;user-select:none;outline:0}.highlight-wrap .copy-btn{transition:opacity .3s ease-in-out;opacity:0;padding:2px 6px;position:absolute;right:4px;top:8px}.highlight-wrap .copy-btn:focus,.highlight-wrap:hover .copy-btn{opacity:1}.highlight-wrap{position:relative}</style><script>$(".highlight").each(function(t,e){var n=$("<div>").addClass("highlight-wrap");$(e).after(n),n.append($("<button>").addClass("copy-btn").append("复制").on("click",function(t){var e=$(this).parent().find(".code").find(".line").map(function(t,e){return $(e).text()}).toArray().join("\n"),n=document.createElement("textarea");document.body.appendChild(n),n.style.position="absolute",n.style.top="0px",n.style.left="0px",n.value=e,n.select(),n.focus();document.execCommand("copy");document.body.removeChild(n),$(this).blur()})).on("mouseleave",function(t){var e=$(this).find(".copy-btn");setTimeout(function(){e.text("复制")},300)}).append(e)})</script></body></html>

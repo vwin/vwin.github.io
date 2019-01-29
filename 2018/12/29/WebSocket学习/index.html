@@ -1,0 +1,317 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0"><link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"6.3.0",sidebar:{position:"left",display:"hide",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!1,fastclick:!1,lazyload:!1,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><meta name="description" content="WebSocket 是一种网络通信协议，很多高级功能都需要它。本文介绍 WebSocket 协议的使用方法。"><meta name="keywords" content="websocket,http"><meta property="og:type" content="article"><meta property="og:title" content="WebSocket学习"><meta property="og:url" content="http://vwin.github.io/2018/12/29/WebSocket学习/index.html"><meta property="og:site_name" content="V&#39;s BLOG"><meta property="og:description" content="WebSocket 是一种网络通信协议，很多高级功能都需要它。本文介绍 WebSocket 协议的使用方法。"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fynojzlbryj30b404cglv.jpg"><meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fynok2w9ohj30hq0dbaao.jpg"><meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fynoks9d3pj30hg0e73zy.jpg"><meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fynolibqubj30bm08oaao.jpg"><meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fynopud1poj30go081wf9.jpg"><meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fynos0nf9sj30go0ct3zs.jpg"><meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fynosmjojhj30ib08kjsg.jpg"><meta property="og:updated_time" content="2019-01-08T06:44:50.920Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="WebSocket学习"><meta name="twitter:description" content="WebSocket 是一种网络通信协议，很多高级功能都需要它。本文介绍 WebSocket 协议的使用方法。"><meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fynojzlbryj30b404cglv.jpg"><link rel="alternate" href="/atom.xml" title="V's BLOG" type="application/atom+xml"><link rel="canonical" href="http://vwin.github.io/2018/12/29/WebSocket学习/"><script type="text/javascript" id="page.configurations">CONFIG.page={sidebar:""}</script><title>WebSocket学习 | V's BLOG</title><noscript><style type="text/css">.sidebar-inner,.use-motion .brand,.use-motion .collection-title,.use-motion .comments,.use-motion .menu-item,.use-motion .motion-element,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .logo,.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">V's BLOG</span> <span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle">上不知天文，下不晓地理</p></div><div class="site-nav-toggle"><button aria-label="切换导航栏"><span class="btn-bar"></span> <span class="btn-bar"></span> <span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i><br>公益 404</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i> </span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://vwin.github.io/2018/12/29/WebSocket学习/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="V"><meta itemprop="description" content="上不知天文，下不晓地理"><meta itemprop="image" content="/images/my.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="V's BLOG"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">WebSocket学习</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2018-12-29 03:07:49" itemprop="dateCreated datePublished" datetime="2018-12-29T03:07:49+08:00">2018-12-29</time> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-calendar-check-o"></i> </span><span class="post-meta-item-text">更新于</span> <time title="修改时间：2019-01-08 14:44:50" itemprop="dateModified" datetime="2019-01-08T14:44:50+08:00">2019-01-08</time> </span><span class="post-category"><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-folder-o"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span> </span><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-eye"></i> 阅读次数： <span class="busuanzi-value" id="busuanzi_value_page_pv"></span></span><div class="post-symbolscount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i> </span><span class="post-meta-item-text">本文字数：</span> <span title="本文字数">5.5k</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i> </span><span class="post-meta-item-text">阅读时长 &asymp;</span> <span title="阅读时长">5 分钟</span></div></div></header><div class="post-body" itemprop="articleBody"><p>WebSocket 是一种网络通信协议，很多高级功能都需要它。<br>本文介绍 WebSocket 协议的使用方法。<br><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fynojzlbryj30b404cglv.jpg" alt=""></p><a id="more"></a><h1 id="为什么需要-WebSocket？"><a href="#为什么需要-WebSocket？" class="headerlink" title="为什么需要 WebSocket？"></a>为什么需要 WebSocket？</h1><p>初次接触 WebSocket 的人，都会问同样的问题：我们已经有了 HTTP 协议，为什么还需要另一个协议？它能带来什么好处？<br>答案很简单，因为 HTTP 协议有一个缺陷：通信只能由客户端发起。<br>举例来说，我们想了解今天的天气，只能是客户端向服务器发出请求，服务器返回查询结果。HTTP 协议做不到服务器主动向客户端推送信息。<br><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fynok2w9ohj30hq0dbaao.jpg" alt=""></p><p>这种单向请求的特点，注定了如果服务器有连续的状态变化，客户端要获知就非常麻烦。我们只能使用”轮询”：每隔一段时候，就发出一个询问，了解服务器有没有新的信息。最典型的场景就是聊天室。</p><p>轮询的效率低，非常浪费资源（因为必须不停连接，或者 HTTP 连接始终打开）。因此，工程师们一直在思考，有没有更好的方法。WebSocket 就是这样发明的。</p><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>WebSocket 协议在2008年诞生，2011年成为国际标准。所有浏览器都已经支持了。</p><p>它的最大特点就是，服务器可以主动向客户端推送信息，客户端也可以主动向服务器发送信息，是真正的双向平等对话，属于服务器推送技术的一种。<br><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fynoks9d3pj30hg0e73zy.jpg" alt=""></p><p>其他特点包括：</p><ol><li>建立在 TCP 协议之上，服务器端的实现比较容易。</li><li>与 HTTP 协议有着良好的兼容性。默认端口也是80和443，并且握手阶段采用 HTTP 协议，因此握手时不容易屏蔽，能通过各种 HTTP 代理服务器。</li><li>数据格式比较轻量，性能开销小，通信高效。</li><li>可以发送文本，也可以发送二进制数据。</li><li>没有同源限制，客户端可以与任意服务器通信。</li><li>协议标识符是ws（如果加密，则为wss），服务器网址就是 URL。</li></ol><blockquote><p>ws://example.com:80/some/path</p></blockquote><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fynolibqubj30bm08oaao.jpg" alt=""></p><h1 id="客户端的简单示例"><a href="#客户端的简单示例" class="headerlink" title="客户端的简单示例"></a>客户端的简单示例</h1><p>WebSocket 的用法相当简单。</p><p>下面是一个网页脚本的例子（点击这里看运行结果），基本上一眼就能明白。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">"wss://echo.websocket.org"</span>);</span><br><span class="line"></span><br><span class="line">ws.onopen = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>&#123; </span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Connection open ..."</span>); </span><br><span class="line">  ws.send(<span class="string">"Hello WebSockets!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log( <span class="string">"Received Message: "</span> + evt.data);</span><br><span class="line">  ws.close();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ws.onclose = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Connection closed."</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><h1 id="客户端的-API"><a href="#客户端的-API" class="headerlink" title="客户端的 API"></a>客户端的 API</h1><p>WebSocket 客户端的 API 如下。</p><h2 id="WebSocket-构造函数"><a href="#WebSocket-构造函数" class="headerlink" title="WebSocket 构造函数"></a>WebSocket 构造函数</h2><p>WebSocket 对象作为一个构造函数，用于新建 WebSocket 实例。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:8080'</span>);</span><br></pre></td></tr></table></figure><p>执行上面语句之后，客户端就会与服务器进行连接。</p><h2 id="webSocket-readyState"><a href="#webSocket-readyState" class="headerlink" title="webSocket.readyState"></a>webSocket.readyState</h2><p>readyState属性返回实例对象的当前状态，共有四种。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CONNECTING：值为0，表示正在连接。</span><br><span class="line">OPEN：值为1，表示连接成功，可以通信了。</span><br><span class="line">CLOSING：值为2，表示连接正在关闭。</span><br><span class="line">CLOSED：值为3，表示连接已经关闭，或者打开连接失败。</span><br></pre></td></tr></table></figure><p>下面是一个示例。<br></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (ws.readyState) &#123;</span><br><span class="line">  <span class="keyword">case</span> WebSocket.CONNECTING:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> WebSocket.OPEN:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> WebSocket.CLOSING:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> WebSocket.CLOSED:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="comment">// this never happens</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p><h2 id="webSocket-onopen"><a href="#webSocket-onopen" class="headerlink" title="webSocket.onopen"></a>webSocket.onopen</h2><p>实例对象的onopen属性，用于指定连接成功后的回调函数。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ws.onopen = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  ws.send(<span class="string">'Hello Server!'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>如果要指定多个回调函数，可以使用addEventListener方法。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ws.addEventListener(<span class="string">'open'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">  ws.send(<span class="string">'Hello Server!'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h2 id="webSocket-onclose"><a href="#webSocket-onclose" class="headerlink" title="webSocket.onclose"></a>webSocket.onclose</h2><p>实例对象的onclose属性，用于指定连接关闭后的回调函数。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ws.onclose = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> code = event.code;</span><br><span class="line">  <span class="keyword">var</span> reason = event.reason;</span><br><span class="line">  <span class="keyword">var</span> wasClean = event.wasClean;</span><br><span class="line">  <span class="comment">// handle close event</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ws.addEventListener(<span class="string">"close"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> code = event.code;</span><br><span class="line">  <span class="keyword">var</span> reason = event.reason;</span><br><span class="line">  <span class="keyword">var</span> wasClean = event.wasClean;</span><br><span class="line">  <span class="comment">// handle close event</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h2 id="webSocket-onmessage"><a href="#webSocket-onmessage" class="headerlink" title="webSocket.onmessage"></a>webSocket.onmessage</h2><p>实例对象的onmessage属性，用于指定收到服务器数据后的回调函数。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> data = event.data;</span><br><span class="line">  <span class="comment">// 处理数据</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ws.addEventListener(<span class="string">"message"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> data = event.data;</span><br><span class="line">  <span class="comment">// 处理数据</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>注意，服务器数据可能是文本，也可能是二进制数据（blob对象或Arraybuffer对象）。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> event.data === <span class="built_in">String</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Received data string"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(event.data <span class="keyword">instanceof</span> <span class="built_in">ArrayBuffer</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> buffer = event.data;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Received arraybuffer"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>除了动态判断收到的数据类型，也可以使用binaryType属性，显式指定收到的二进制数据类型。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 收到的是 blob 数据</span></span><br><span class="line">ws.binaryType = <span class="string">"blob"</span>;</span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.data.size);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 收到的是 ArrayBuffer 数据</span></span><br><span class="line">ws.binaryType = <span class="string">"arraybuffer"</span>;</span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.data.byteLength);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><h2 id="webSocket-send"><a href="#webSocket-send" class="headerlink" title="webSocket.send()"></a>webSocket.send()</h2><p>实例对象的send()方法用于向服务器发送数据。</p><p>发送文本的例子。<br></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ws.send(<span class="string">'your message'</span>);</span><br></pre></td></tr></table></figure><p></p><p>发送 Blob 对象的例子。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> file = <span class="built_in">document</span></span><br><span class="line">  .querySelector(<span class="string">'input[type="file"]'</span>)</span><br><span class="line">  .files[<span class="number">0</span>];</span><br><span class="line">ws.send(file);</span><br></pre></td></tr></table></figure><p>发送 ArrayBuffer 对象的例子。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Sending canvas ImageData as ArrayBuffer</span></span><br><span class="line"><span class="keyword">var</span> img = canvas_context.getImageData(<span class="number">0</span>, <span class="number">0</span>, <span class="number">400</span>, <span class="number">320</span>);</span><br><span class="line"><span class="keyword">var</span> binary = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(img.data.length);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; img.data.length; i++) &#123;</span><br><span class="line">  binary[i] = img.data[i];</span><br><span class="line">&#125;</span><br><span class="line">ws.send(binary.buffer);</span><br></pre></td></tr></table></figure><h2 id="webSocket-bufferedAmount"><a href="#webSocket-bufferedAmount" class="headerlink" title="webSocket.bufferedAmount"></a>webSocket.bufferedAmount</h2><p>实例对象的bufferedAmount属性，表示还有多少字节的二进制数据没有发送出去。它可以用来判断发送是否结束。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">10000000</span>);</span><br><span class="line">socket.send(data);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (socket.bufferedAmount === <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="comment">// 发送完毕</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 发送还没结束</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="webSocket-onerror"><a href="#webSocket-onerror" class="headerlink" title="webSocket.onerror"></a>webSocket.onerror</h2><p>实例对象的onerror属性，用于指定报错时的回调函数。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">socket.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// handle error event</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">socket.addEventListener(<span class="string">"error"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// handle error event</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h1 id="服务端的实现"><a href="#服务端的实现" class="headerlink" title="服务端的实现"></a>服务端的实现</h1><p>WebSocket 服务器的实现，可以查看维基百科的列表。</p><p>常用的 Node 实现有以下三种。</p><ol><li><a href="https://github.com/uWebSockets/uWebSockets" target="_blank" rel="noopener">µWebSockets</a></li><li><a href="http://socket.io/" target="_blank" rel="noopener">Socket.IO</a></li><li><a href="https://github.com/theturtle32/WebSocket-Node" target="_blank" rel="noopener">WebSocket-Node</a></li></ol><p>具体的用法请查看它们的文档，这里不详细介绍了。</p><h1 id="WebSocketd"><a href="#WebSocketd" class="headerlink" title="WebSocketd"></a>WebSocketd</h1><p>下面，我要推荐一款非常特别的 WebSocket 服务器：Websocketd。</p><p>它的最大特点，就是后台脚本不限语言，标准输入（stdin）就是 WebSocket 的输入，标准输出（stdout）就是 WebSocket 的输出。<br><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fynopud1poj30go081wf9.jpg" alt=""></p><p>举例来说，下面是一个 Bash 脚本counter.sh。<br></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">echo 1</span><br><span class="line">sleep 1</span><br><span class="line"></span><br><span class="line">echo 2</span><br><span class="line">sleep 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo 3</span><br></pre></td></tr></table></figure><p></p><p>命令行下运行这个脚本，会输出1、2、3，每个值之间间隔1秒。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> bash ./counter.sh</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure><p>现在，启动websocketd，指定这个脚本作为服务。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> websocketd --port=8080 bash ./counter.sh</span><br></pre></td></tr></table></figure><p>上面的命令会启动一个 WebSocket 服务器，端口是8080。每当客户端连接这个服务器，就会执行counter.sh脚本，并将它的输出推送给客户端。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:8080/'</span>);</span><br><span class="line"></span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(event.data);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>上面是客户端的 JavaScript 代码，运行之后会在控制台依次输出1、2、3。</p><p>有了它，就可以很方便地将命令行的输出，发给浏览器。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> websocketd --port=8080 ls</span><br></pre></td></tr></table></figure><p>上面的命令会执行ls命令，从而将当前目录的内容，发给浏览器。使用这种方式实时监控服务器，简直是轻而易举（代码）。<br><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fynos0nf9sj30go0ct3zs.jpg" alt=""></p><p>更多的用法可以参考<a href="https://github.com/joewalnes/websocketd/tree/master/examples/bash" target="_blank" rel="noopener">官方示例</a>。</p><blockquote><p>Bash 脚本读取客户端输入的例子；五行代码实现一个最简单的聊天服务器</p></blockquote><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fynosmjojhj30ib08kjsg.jpg" alt=""><br>websocketd 的实质，就是命令行的 WebSocket 代理。只要命令行可以执行的程序，都可以通过它与浏览器进行 WebSocket 通信。下面是一个 Node 实现的回声服务greeter.js。<br></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">process.stdin.setEncoding(<span class="string">'utf8'</span>);</span><br><span class="line"></span><br><span class="line">process.stdin.on(<span class="string">'readable'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> chunk = process.stdin.read();</span><br><span class="line">  <span class="keyword">if</span> (chunk !== <span class="literal">null</span>) &#123;</span><br><span class="line">    process.stdout.write(<span class="string">'data: '</span> + chunk);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p></p><p>启动这个脚本的命令如下。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> websocketd --port=8080 node ./greeter.js</span><br></pre></td></tr></table></figure><p>官方仓库还有其他各种语言的例子。</p><h1 id="七、参考链接"><a href="#七、参考链接" class="headerlink" title="七、参考链接"></a>七、参考链接</h1><p><a href="http://cjihrig.com/blog/how-to-use-websockets/" target="_blank" rel="noopener">How to Use WebSockets</a></p><p><a href="https://www.tutorialspoint.com/websockets/websockets_send_receive_messages.htm" target="_blank" rel="noopener">WebSockets - Send &amp; Receive Messages</a></p><p><a href="https://www.html5rocks.com/en/tutorials/websockets/basics/" target="_blank" rel="noopener">Introducing WebSockets: Bringing Sockets to the Web</a></p><p><a href="http://www.ruanyifeng.com/blog/2017/05/websocket.html" target="_blank" rel="noopener">阮一峰博客</a></p></div><footer class="post-footer"><div class="post-tags"><a href="/tags/websocket/" rel="tag"># websocket</a> <a href="/tags/http/" rel="tag"># http</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/12/26/Python-flask资源/" rel="next" title="Python-flask资源"><i class="fa fa-chevron-left"></i> Python-flask资源</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"><a href="/2018/12/29/性能测试总结-基础理论/" rel="prev" title="性能测试总结-基础理论">性能测试总结-基础理论 <i class="fa fa-chevron-right"></i></a></div></div></footer></div></article></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap">站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/my.gif" alt="V"><p class="site-author-name" itemprop="name">V</p><p class="site-description motion-element" itemprop="description">上不知天文，下不晓地理</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">75</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">23</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">119</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate"><i class="fa fa-rss"></i> RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/vwin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a> </span><span class="links-of-author-item"><a href="mailto:kkcrush0@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a></span></div><div class="links-of-blogroll motion-element links-of-blogroll-block"><div class="links-of-blogroll-title"><i class="fa fa-fw fa-link"></i> 友情链接</div><ul class="links-of-blogroll-list"><li class="links-of-blogroll-item"><a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a></li></ul></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么需要-WebSocket？"><span class="nav-number">1.</span> <span class="nav-text">为什么需要 WebSocket？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端的简单示例"><span class="nav-number">3.</span> <span class="nav-text">客户端的简单示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端的-API"><span class="nav-number">4.</span> <span class="nav-text">客户端的 API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WebSocket-构造函数"><span class="nav-number">4.1.</span> <span class="nav-text">WebSocket 构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webSocket-readyState"><span class="nav-number">4.2.</span> <span class="nav-text">webSocket.readyState</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webSocket-onopen"><span class="nav-number">4.3.</span> <span class="nav-text">webSocket.onopen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webSocket-onclose"><span class="nav-number">4.4.</span> <span class="nav-text">webSocket.onclose</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webSocket-onmessage"><span class="nav-number">4.5.</span> <span class="nav-text">webSocket.onmessage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webSocket-send"><span class="nav-number">4.6.</span> <span class="nav-text">webSocket.send()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webSocket-bufferedAmount"><span class="nav-number">4.7.</span> <span class="nav-text">webSocket.bufferedAmount</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webSocket-onerror"><span class="nav-number">4.8.</span> <span class="nav-text">webSocket.onerror</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务端的实现"><span class="nav-number">5.</span> <span class="nav-text">服务端的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebSocketd"><span class="nav-number">6.</span> <span class="nav-text">WebSocketd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、参考链接"><span class="nav-number">7.</span> <span class="nav-text">七、参考链接</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span> <span class="with-love" id="animate"><i class="fa fa-user"></i> </span><span class="author" itemprop="copyrightHolder">V</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-area-chart"></i> </span><span title="站点总字数">183k</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-coffee"></i> </span><span title="站点阅读时长">2:47</span></div><div class="busuanzi-count"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span class="site-uv" title="总访客量"><i class="fa fa-user"></i> <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> </span><span class="site-pv" title="总访问量"><i class="fa fa-eye"></i> <span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span></div></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script><script src="/lib/bookmark/bookmark.min.js?v=1.0"></script><script type="text/javascript">bookmark.scrollToMark("auto","#更多")</script><style>.copy-btn{display:inline-block;padding:6px 12px;font-size:13px;font-weight:700;line-height:20px;color:#333;white-space:nowrap;vertical-align:middle;cursor:pointer;background-color:#eee;background-image:linear-gradient(#fcfcfc,#eee);border:1px solid #d5d5d5;border-radius:3px;user-select:none;outline:0}.highlight-wrap .copy-btn{transition:opacity .3s ease-in-out;opacity:0;padding:2px 6px;position:absolute;right:4px;top:8px}.highlight-wrap .copy-btn:focus,.highlight-wrap:hover .copy-btn{opacity:1}.highlight-wrap{position:relative}</style><script>$(".highlight").each(function(t,e){var n=$("<div>").addClass("highlight-wrap");$(e).after(n),n.append($("<button>").addClass("copy-btn").append("复制").on("click",function(t){var e=$(this).parent().find(".code").find(".line").map(function(t,e){return $(e).text()}).toArray().join("\n"),n=document.createElement("textarea");document.body.appendChild(n),n.style.position="absolute",n.style.top="0px",n.style.left="0px",n.value=e,n.select(),n.focus();document.execCommand("copy");document.body.removeChild(n),$(this).blur()})).on("mouseleave",function(t){var e=$(this).find(".copy-btn");setTimeout(function(){e.text("复制")},300)}).append(e)})</script></body></html>
