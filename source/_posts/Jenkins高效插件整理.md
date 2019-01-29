@@ -52,7 +52,7 @@ Poll SCM，Jenkins 内置功能，类似Build periodically，可以设置类似c
 # 构建参数
 Jenkins除了支持普通的参数类型（布尔型、字符串型、多行文本型、选择型和文件型 ）外，还有一些插件支持更加丰富实用的参数类型，比如参数间动态关联、多层级参数、隐藏参数等 。
 
-1. nodelabelparameter  https://plugins.jenkins.io/nodelabelparameter，这个插件增加了一个新的参数类型，Node 和 Label，从而使用户通过参数可以选择项目构建运行的节点。
+1. [nodelabelparameter](https://plugins.jenkins.io/nodelabelparameter) 这个插件增加了一个新的参数类型，Node 和 Label，从而使用户通过参数可以选择项目构建运行的节点。
 其他插件不一一列举，可以查看插件说明
    - https://plugins.jenkins.io/hidden-parameter
    - https://plugins.jenkins.io/extended-choice-parameter

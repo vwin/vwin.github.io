@@ -16,4 +16,10 @@ Jmeter使用总结
 
 2. 不勾选 Run Thread Groups consecutively(i.e.one at time)，则表示并行执行。并行执行，指的是指的是测试计划中存在多个线程组时，所有线程组都在同一时刻执行
 
-[总结](http://www.cnblogs.com/puresoul/p/5092628.html)
+
+## Jmeter 命令行运行参数说明
+   ![](https://ws2.sinaimg.cn/large/006tNc79ly1fz72m4h9gpj30l10dejtx.jpg)
+
+
+
+## [总结](http://www.cnblogs.com/puresoul/p/5092628.html)
