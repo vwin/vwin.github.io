@@ -1,1 +1,247 @@
-!function(s,a){var t=s(".ins-search"),n=t.find(".ins-search-input"),o=t.find(".ins-section-wrapper"),c=t.find(".ins-section-container");function r(n,t,e,i,r){return s("<div>").addClass("ins-selectable").addClass("ins-search-item").append(s("<header>").append(s("<i>").addClass("icon").addClass("icon-"+n)).append(null!=t&&""!=t?t:a.TRANSLATION.UNTITLED).append(e?s("<span>").addClass("ins-slug").text(e):null)).append(i?s("<p>").addClass("ins-search-preview").text(i):null).attr("data-url",r)}function l(t,n){var e,i;if(0===n.length)return null;switch(i=a.TRANSLATION[t],t){case"POSTS":case"PAGES":e=n.map(function(n){return r("file",n.title,null,n.text.slice(0,150),a.ROOT_URL+n.path)});break;case"CATEGORIES":case"TAGS":e=n.map(function(n){return r("CATEGORIES"===t?"folder":"tag",n.name,n.slug,null,n.permalink)});break;default:return null}return i=i,s("<section>").addClass("ins-section").append(s("<header>").addClass("ins-section-header").text(i)).append(e)}function u(n,t){var e={},i=(n.pages.concat(n.posts).forEach(function(n){n[t]&&n[t].forEach(function(n){e[n.name]=n})}),[]);for(t in e)i.push(e[t]);return i}function f(n){return n.split(" ").filter(function(n){return!!n}).map(function(n){return n.toUpperCase()})}function p(n,e,i){n=f(n);return n.filter(function(t){return 0<i.filter(function(n){return!!e.hasOwnProperty(n)&&(-1<e[n].toUpperCase().indexOf(t)||void 0)}).length}).length===n.length}function d(n,i,t,r){var s=0;return f(n).forEach(function(n){var e=new RegExp(n,"img");t.forEach(function(n,t){i.hasOwnProperty(n)&&(n=i[n].match(e),s+=n?n.length*r[t]:0)})}),s}function h(n,t){var e,i,r={POST:function(n){return d(e,n,["title","text"],[3,1])},PAGE:function(n){return d(e,n,["title","text"],[3,1])},CATEGORY:function(n){return d(e,n,["name","slug"],[1,1])},TAG:function(n){return d(e,n,["name","slug"],[1,1])}},t=(i=e=t,{POST:function(n){return p(i,n,["title","text"])},PAGE:function(n){return p(i,n,["title","text"])},CATEGORY:function(n){return p(i,n,["name","slug"])},TAG:function(n){return p(i,n,["name","slug"])}}),s=n.posts,a=n.pages,o=u(n,"tags"),n=u(n,"categories");return{posts:s.filter(t.POST).sort(function(n,t){return r.POST(t)-r.POST(n)}).slice(0,5),pages:a.filter(t.PAGE).sort(function(n,t){return r.PAGE(t)-r.PAGE(n)}).slice(0,5),categories:n.filter(t.CATEGORY).sort(function(n,t){return r.CATEGORY(t)-r.CATEGORY(n)}).slice(0,5),tags:o.filter(t.TAG).sort(function(n,t){return r.TAG(t)-r.TAG(n)}).slice(0,5)}}function e(n){var t,e,i=s.makeArray(c.find(".ins-selectable")),r=-1,n=(i.forEach(function(n,t){s(n).hasClass("active")&&(r=t)}),(i.length+r+n)%i.length);s(i[r]).removeClass("active"),s(i[n]).addClass("active"),0!==(i=s(i[n])).length&&(n=o[0].clientHeight,t=i.position().top-o.scrollTop(),(e=i[0].clientHeight+i.position().top)>n+o.scrollTop()&&o.scrollTop(e-o[0].clientHeight),t<0&&o.scrollTop(i.position().top))}function i(n){n&&n.length&&(location.href=n.attr("data-url"))}t.parent().remove(".ins-search"),s("body").append(t),s.getJSON(a.CONTENT_URL,function(i){"#ins-search"===location.hash.trim()&&t.addClass("show"),n.on("input",function(){var n,t=s(this).val(),e=h(i,t);for(n in c.empty(),e)c.append(l(n.toUpperCase(),e[n]))}),n.trigger("input")}),s(document).on("click focus",".search-form-input",function(){t.addClass("show"),t.find(".ins-search-input").focus()}).on("click",".ins-search-item",function(){i(s(this))}).on("click",".ins-close",function(){t.removeClass("show")}).on("keydown",function(n){if(t.hasClass("show"))switch(n.keyCode){case 27:t.removeClass("show");break;case 38:e(-1);break;case 40:e(1);break;case 13:i(c.find(".ins-selectable.active").eq(0))}})}(jQuery,window.INSIGHT_CONFIG);
+/**
+ * Insight search plugin
+ * @author PPOffice { @link https://github.com/ppoffice }
+ */
+(function ($, CONFIG) {
+    var $main = $('.ins-search');
+    var $input = $main.find('.ins-search-input');
+    var $wrapper = $main.find('.ins-section-wrapper');
+    var $container = $main.find('.ins-section-container');
+    $main.parent().remove('.ins-search');
+    $('body').append($main);
+
+    function section (title) {
+        return $('<section>').addClass('ins-section')
+            .append($('<header>').addClass('ins-section-header').text(title));
+    }
+
+    function searchItem (icon, title, slug, preview, url) {
+        return $('<div>').addClass('ins-selectable').addClass('ins-search-item')
+            .append($('<header>').append($('<i>').addClass('icon').addClass('icon-' + icon)).append(title != null && title != '' ? title : CONFIG.TRANSLATION['UNTITLED'])
+                .append(slug ? $('<span>').addClass('ins-slug').text(slug) : null))
+            .append(preview ? $('<p>').addClass('ins-search-preview').text(preview) : null)
+            .attr('data-url', url);
+    }
+
+    function sectionFactory (type, array) {
+        var sectionTitle;
+        var $searchItems;
+        if (array.length === 0) return null;
+        sectionTitle = CONFIG.TRANSLATION[type];
+        switch (type) {
+            case 'POSTS':
+            case 'PAGES':
+                $searchItems = array.map(function (item) {
+                    // Use config.root instead of permalink to fix url issue
+                    return searchItem('file', item.title, null, item.text.slice(0, 150), CONFIG.ROOT_URL + item.path);
+                });
+                break;
+            case 'CATEGORIES':
+            case 'TAGS':
+                $searchItems = array.map(function (item) {
+                    return searchItem(type === 'CATEGORIES' ? 'folder' : 'tag', item.name, item.slug, null, item.permalink);
+                });
+                break;
+            default:
+                return null;
+        }
+        return section(sectionTitle).append($searchItems);
+    }
+    function extractToSet (json, key) {
+        var values = {};
+        var entries = json.pages.concat(json.posts);
+        entries.forEach(function (entry) {
+            if (entry[key]) {
+                entry[key].forEach(function (value) {
+                    values[value.name] = value;
+                });
+            }
+        });
+        var result = [];
+        for (var key in values) {
+            result.push(values[key]);
+        }
+        return result;
+    }
+
+    function parseKeywords (keywords) {
+        return keywords.split(' ').filter(function (keyword) {
+            return !!keyword;
+        }).map(function (keyword) {
+            return keyword.toUpperCase();
+        });
+    }
+
+    /**
+     * Judge if a given post/page/category/tag contains all of the keywords.
+     * @param Object            obj     Object to be weighted
+     * @param Array<String>     fields  Object's fields to find matches
+     */
+    function filter (keywords, obj, fields) {
+        var result = false;
+        var keywordArray = parseKeywords(keywords);
+        var containKeywords = keywordArray.filter(function (keyword) {
+            var containFields = fields.filter(function (field) {
+                if (!obj.hasOwnProperty(field))
+                    return false;
+                if (obj[field].toUpperCase().indexOf(keyword) > -1)
+                    return true;
+            });
+            if (containFields.length > 0)
+                return true;
+            return false;
+        });
+        return containKeywords.length === keywordArray.length;
+    }
+
+    function filterFactory (keywords) {
+        return {
+            POST: function (obj) {
+                return filter(keywords, obj, ['title', 'text']);
+            },
+            PAGE: function (obj) {
+                return filter(keywords, obj, ['title', 'text']);
+            },
+            CATEGORY: function (obj) {
+                return filter(keywords, obj, ['name', 'slug']);
+            },
+            TAG: function (obj) {
+                return filter(keywords, obj, ['name', 'slug']);
+            }
+        };
+    }
+
+    /**
+     * Calculate the weight of a matched post/page/category/tag.
+     * @param Object            obj     Object to be weighted
+     * @param Array<String>     fields  Object's fields to find matches
+     * @param Array<Integer>    weights Weight of every field
+     */
+    function weight (keywords, obj, fields, weights) {
+        var value = 0;
+        parseKeywords(keywords).forEach(function (keyword) {
+            var pattern = new RegExp(keyword, 'img'); // Global, Multi-line, Case-insensitive
+            fields.forEach(function (field, index) {
+                if (obj.hasOwnProperty(field)) {
+                    var matches = obj[field].match(pattern);
+                    value += matches ? matches.length * weights[index] : 0;
+                }
+            });
+        });
+        return value;
+    }
+
+    function weightFactory (keywords) {
+        return {
+            POST: function (obj) {
+                return weight(keywords, obj, ['title', 'text'], [3, 1]);
+            },
+            PAGE: function (obj) {
+                return weight(keywords, obj, ['title', 'text'], [3, 1]);
+            },
+            CATEGORY: function (obj) {
+                return weight(keywords, obj, ['name', 'slug'], [1, 1]);
+            },
+            TAG: function (obj) {
+                return weight(keywords, obj, ['name', 'slug'], [1, 1]);
+            }
+        };
+    }
+
+    function search (json, keywords) {
+        var WEIGHTS = weightFactory(keywords);
+        var FILTERS = filterFactory(keywords);
+        var posts = json.posts;
+        var pages = json.pages;
+        var tags = extractToSet(json, 'tags');
+        var categories = extractToSet(json, 'categories');
+        return {
+            posts: posts.filter(FILTERS.POST).sort(function (a, b) { 
+                return WEIGHTS.POST(b) - WEIGHTS.POST(a); 
+            }).slice(0, 5),
+            pages: pages.filter(FILTERS.PAGE).sort(function (a, b) { 
+                return WEIGHTS.PAGE(b) - WEIGHTS.PAGE(a); 
+            }).slice(0, 5),
+            categories: categories.filter(FILTERS.CATEGORY).sort(function (a, b) { 
+                return WEIGHTS.CATEGORY(b) - WEIGHTS.CATEGORY(a); 
+            }).slice(0, 5),
+            tags: tags.filter(FILTERS.TAG).sort(function (a, b) { 
+                return WEIGHTS.TAG(b) - WEIGHTS.TAG(a); 
+            }).slice(0, 5)
+        };
+    }
+
+    function searchResultToDOM (searchResult) {
+        $container.empty();
+        for (var key in searchResult) {
+            $container.append(sectionFactory(key.toUpperCase(), searchResult[key]));
+        }
+    }
+
+    function scrollTo ($item) {
+        if ($item.length === 0) return;
+        var wrapperHeight = $wrapper[0].clientHeight;
+        var itemTop = $item.position().top - $wrapper.scrollTop();
+        var itemBottom = $item[0].clientHeight + $item.position().top;
+        if (itemBottom > wrapperHeight + $wrapper.scrollTop()) {
+            $wrapper.scrollTop(itemBottom - $wrapper[0].clientHeight);
+        }
+        if (itemTop < 0) {
+            $wrapper.scrollTop($item.position().top);
+        }
+    }
+
+    function selectItemByDiff (value) {
+        var $items = $.makeArray($container.find('.ins-selectable'));
+        var prevPosition = -1;
+        $items.forEach(function (item, index) {
+            if ($(item).hasClass('active')) {
+                prevPosition = index;
+                return;
+            }
+        });
+        var nextPosition = ($items.length + prevPosition + value) % $items.length;
+        $($items[prevPosition]).removeClass('active');
+        $($items[nextPosition]).addClass('active');
+        scrollTo($($items[nextPosition]));
+    }
+
+    function gotoLink ($item) {
+        if ($item && $item.length) {
+            location.href = $item.attr('data-url');
+        }
+    }
+
+    $.getJSON(CONFIG.CONTENT_URL, function (json) {
+        if (location.hash.trim() === '#ins-search') {
+            $main.addClass('show');
+        }
+        $input.on('input', function () {
+            var keywords = $(this).val();
+            searchResultToDOM(search(json, keywords));
+        });
+        $input.trigger('input');
+    });
+
+
+    $(document).on('click focus', '.search-form-input', function () {
+        $main.addClass('show');
+        $main.find('.ins-search-input').focus();
+    }).on('click', '.ins-search-item', function () {
+        gotoLink($(this));
+    }).on('click', '.ins-close', function () {
+        $main.removeClass('show');
+    }).on('keydown', function (e) {
+        if (!$main.hasClass('show')) return;
+        switch (e.keyCode) {
+            case 27: // ESC
+                $main.removeClass('show'); break;
+            case 38: // UP
+                selectItemByDiff(-1); break;
+            case 40: // DOWN
+                selectItemByDiff(1); break;
+            case 13: //ENTER
+                gotoLink($container.find('.ins-selectable.active').eq(0)); break;
+        }
+    });
+})(jQuery, window.INSIGHT_CONFIG);

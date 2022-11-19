@@ -1,1 +1,651 @@
-<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="baidu-site-verification" content="code-w6zMFQOLpu"><meta name="referrer" content="strict-origin-when-cross-origin"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui"><meta name="renderer" content="webkit"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no,email=yes,adress=no"><meta name="theme-color" content="#000000"><meta http-equiv="window-target" content="_top"><title>性能测试总结-测试流程 | 予乐</title><meta name="description" content="本文主要介绍下性能测试的基本流程，性能测试从实际执行层面来看，测试的过程一般分为这么几个阶段，如下图："><meta property="og:type" content="article"><meta property="og:title" content="性能测试总结-测试流程"><meta property="og:url" content="http://vwin.github.io/2019/08/10/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/index.html"><meta property="og:site_name" content="V&#39;s BLOG"><meta property="og:description" content="本文主要介绍下性能测试的基本流程，性能测试从实际执行层面来看，测试的过程一般分为这么几个阶段，如下图："><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fynqexw9ogj30cq0n2dh1.jpg"><meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fynqf0teg3j30qe0iudic.jpg"><meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fynqf3ipk0j30o00eq40d.jpg"><meta property="article:published_time" content="2019-08-10T11:54:49.000Z"><meta property="article:modified_time" content="2022-11-19T08:30:38.485Z"><meta property="article:author" content="V"><meta property="article:tag" content="性能测试"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fynqexw9ogj30cq0n2dh1.jpg"><link rel="canonical" href="http://vwin.github.io/2019/08/10/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/index.html"><link rel="alternate" href="/atom.xml" title="V&#39;s BLOG" type="application/atom+xml"><link rel="icon" href="/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet"><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?8082412711ea4c547c7fdf0e87eb19fb";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><meta name="generator" content="Hexo 6.0.0"></head><body class="main-center" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="slimContent"><div class="navbar-header"><div class="profile-block text-center"><a id="avatar" href="https://github.com/vwin" target="_blank"><img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200"></a><h2 id="name" class="hidden-xs hidden-sm">will</h2><h3 id="title" class="hidden-xs hidden-sm hidden-md">Software Development Engineer in Test &amp; Devops Engineer</h3><small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small></div><div class="search" id="search-form-wrap"><form class="search-form sidebar-form"><div class="input-group"><input type="text" class="search-form-input form-control" placeholder="搜索"> <span class="input-group-btn"><button type="submit" class="search-form-submit btn btn-flat" onclick="return!1"><i class="icon icon-search"></i></button></span></div></form><div class="ins-search"><div class="ins-search-mask"></div><div class="ins-search-container"><div class="ins-input-wrapper"><input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech> <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="ins-section-wrapper"><div class="ins-section-container"></div></div></div></div></div><button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button></div><nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation"><ul class="nav navbar-nav main-nav"><li class="menu-item menu-item-home"><a href="/."><i class="icon icon-home-fill"></i> <span class="menu-title">首页</span></a></li><li class="menu-item menu-item-archives"><a href="/archives"><i class="icon icon-archives-fill"></i> <span class="menu-title">归档</span></a></li><li class="menu-item menu-item-about"><a href="/about"><i class="icon icon-cup-fill"></i> <span class="menu-title">关于</span></a></li><li class="menu-item menu-item-bookmark"><a href="/bookmark"><i class="icon icon-book"></i> <span class="menu-title">书签</span></a></li></ul><ul class="social-links"><li><a href="https://github.com/vwin" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li><li><a href="https://yuleweici.com/yuleweici/" target="_blank" title="Link" data-toggle="tooltip" data-placement="top"><i class="icon icon-link"></i></a></li><li><a href="mailto:crazyboyspecial@qq.com" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li><li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li></ul></nav></div></header><aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar"><div class="slimContent"><div class="widget"><h3 class="widget-title">公告</h3><div class="widget-body"><div id="board"><div class="content"><p>欢迎交流与分享经验.<br><a style="color:red" target="_blank" href="https://yuleweici.com/yuleweici-vuepress/">博客-Vuepress</a><br><a style="color:green" target="_blank" href="http://yuleweici.com/yuleweici-docsify/#/">博客-Docsify</a></p></div></div></div></div><div class="widget"><h3 class="widget-title">分类</h3><div class="widget-body"><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C/">工作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span class="category-list-count">60</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a><span class="category-list-count">1</span></li></ul></div></div><div class="widget"><h3 class="widget-title">标签</h3><div class="widget-body"><ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI%E8%AF%84%E6%B5%8B/" rel="tag">AI评测</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Conan/" rel="tag">Conan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Derrick/" rel="tag">Derrick</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Devops/" rel="tag">Devops</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Go/" rel="tag">Go</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Grafana/" rel="tag">Grafana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IaaS/" rel="tag">IaaS</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iaas/" rel="tag">Iaas</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Prometheus/" rel="tag">Prometheus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QPS/" rel="tag">QPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TPS/" rel="tag">TPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UI%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">UI自动化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aio/" rel="tag">aio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/airtest/" rel="tag">airtest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bio/" rel="tag">bio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bootstrap/" rel="tag">bootstrap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broker/" rel="tag">broker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/buffer/" rel="tag">buffer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cached/" rel="tag">cached</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/celery/" rel="tag">celery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmake/" rel="tag">cmake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cnpm/" rel="tag">cnpm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consumer/" rel="tag">consumer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/date/" rel="tag">date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/datetime/" rel="tag">datetime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/describe/" rel="tag">describe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dict/" rel="tag">dict</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/element-ui/" rel="tag">element ui</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/" rel="tag">flask</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fn/" rel="tag">fn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fp/" rel="tag">fp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/free/" rel="tag">free</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geojson/" rel="tag">geojson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github-pages/" rel="tag">github pages</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/" rel="tag">go</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gunicorn/" rel="tag">gunicorn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/" rel="tag">ios</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdk/" rel="tag">jdk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jmeter/" rel="tag">jmeter</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jre/" rel="tag">jre</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/json/" rel="tag">json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jupyter-notebook/" rel="tag">jupyter notebook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k6/" rel="tag">k6</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/" rel="tag">kafka</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka-topic-sh/" rel="tag">kafka-topic.sh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lambda/" rel="tag">lambda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/list/" rel="tag">list</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/locust/" rel="tag">locust</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/makefile/" rel="tag">makefile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/metaclass/" rel="tag">metaclass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfs/" rel="tag">mfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/" rel="tag">next</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nio/" rel="tag">nio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nmake/" rel="tag">nmake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/" rel="tag">npm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paramiko/" rel="tag">paramiko</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/partition/" rel="tag">partition</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pdf/" rel="tag">pdf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/perf/" rel="tag">perf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php5-fpm/" rel="tag">php5-fpm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php7-fpm/" rel="tag">php7-fpm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pip/" rel="tag">pip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytest/" rel="tag">pytest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pythonic/" rel="tag">pythonic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qgis/" rel="tag">qgis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/re/" rel="tag">re</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/replica/" rel="tag">replica</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/roc/" rel="tag">roc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/samba/" rel="tag">samba</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scp/" rel="tag">scp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seaweedfs/" rel="tag">seaweedfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sorted/" rel="tag">sorted</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/" rel="tag">spark</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/" rel="tag">ssh</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sudo/" rel="tag">sudo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/supervisor/" rel="tag">supervisor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemtap/" rel="tag">systemtap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/time/" rel="tag">time</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/timeout/" rel="tag">timeout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tmux/" rel="tag">tmux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tn/" rel="tag">tn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tp/" rel="tag">tp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unittest/" rel="tag">unittest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/" rel="tag">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zip/" rel="tag">zip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%91/" rel="tag">云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%9D%E9%99%A9/" rel="tag">保险</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E9%93%BE%E8%B7%AF/" rel="tag">全链路</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0/" rel="tag">函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag">分布式</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%94%AF%E7%AD%96%E7%95%A5/" rel="tag">分支策略</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" rel="tag">单例模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E6%B5%8B/" rel="tag">单测</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%8B%E6%B5%8B/" rel="tag">压测</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E5%8F%B0/" rel="tag">后台</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E5%8F%B0%E5%85%B3%E7%B3%BB/" rel="tag">后台关系</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" rel="tag">域名解析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%B4%E6%96%87%E4%BB%B6/" rel="tag">头文件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%82%A8/" rel="tag">存储</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" rel="tag">性能分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" rel="tag">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/" rel="tag">持续集成</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%92%E4%BB%B6/" rel="tag">插件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/" rel="tag">斐波那契数列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A5%E6%9C%9F/" rel="tag">日期</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%B6%E9%97%B4/" rel="tag">时间</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8B%E8%AF%95/" rel="tag">测试</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%81%AB%E7%84%B0%E5%9B%BE/" rel="tag">火焰图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%BD%B1/" rel="tag">电影</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98/" rel="tag">百度网盘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%91%E6%8E%A7/" rel="tag">监控</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A9%E9%98%B5/" rel="tag">矩阵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83/" rel="tag">网络环境</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" rel="tag">自动驾驶</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A1%8C%E6%94%BF%E5%8C%BA/" rel="tag">行政区</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%8D%E4%BA%91/" rel="tag">词云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95%E7%B3%96/" rel="tag">语法糖</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B1%86%E7%93%A3/" rel="tag">豆瓣</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" rel="tag">责任链模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%81%93%E6%A0%BC%E6%8B%89%E6%96%AF/" rel="tag">道格拉斯</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li></ul></div></div><div class="widget"><h3 class="widget-title">标签云</h3><div class="widget-body tagcloud"><a href="/tags/AI%E8%AF%84%E6%B5%8B/" style="font-size:13px">AI评测</a> <a href="/tags/C/" style="font-size:13.29px">C++</a> <a href="/tags/CI/" style="font-size:13px">CI</a> <a href="/tags/Conan/" style="font-size:13px">Conan</a> <a href="/tags/Derrick/" style="font-size:13px">Derrick</a> <a href="/tags/Devops/" style="font-size:13px">Devops</a> <a href="/tags/Go/" style="font-size:13px">Go</a> <a href="/tags/Grafana/" style="font-size:13px">Grafana</a> <a href="/tags/HTML/" style="font-size:13px">HTML</a> <a href="/tags/IaaS/" style="font-size:13.29px">IaaS</a> <a href="/tags/Iaas/" style="font-size:13.14px">Iaas</a> <a href="/tags/Jenkins/" style="font-size:13.14px">Jenkins</a> <a href="/tags/Prometheus/" style="font-size:13px">Prometheus</a> <a href="/tags/Python/" style="font-size:13.14px">Python</a> <a href="/tags/QPS/" style="font-size:13px">QPS</a> <a href="/tags/TPS/" style="font-size:13px">TPS</a> <a href="/tags/UI%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size:13px">UI自动化</a> <a href="/tags/Ubuntu/" style="font-size:13px">Ubuntu</a> <a href="/tags/aio/" style="font-size:13px">aio</a> <a href="/tags/airtest/" style="font-size:13px">airtest</a> <a href="/tags/bio/" style="font-size:13px">bio</a> <a href="/tags/bootstrap/" style="font-size:13px">bootstrap</a> <a href="/tags/broker/" style="font-size:13px">broker</a> <a href="/tags/buffer/" style="font-size:13px">buffer</a> <a href="/tags/c/" style="font-size:13.14px">c++</a> <a href="/tags/cached/" style="font-size:13px">cached</a> <a href="/tags/celery/" style="font-size:13px">celery</a> <a href="/tags/cmake/" style="font-size:13px">cmake</a> <a href="/tags/cnpm/" style="font-size:13px">cnpm</a> <a href="/tags/consumer/" style="font-size:13px">consumer</a> <a href="/tags/date/" style="font-size:13px">date</a> <a href="/tags/datetime/" style="font-size:13px">datetime</a> <a href="/tags/describe/" style="font-size:13px">describe</a> <a href="/tags/dict/" style="font-size:13px">dict</a> <a href="/tags/docker/" style="font-size:13px">docker</a> <a href="/tags/element-ui/" style="font-size:13px">element ui</a> <a href="/tags/flask/" style="font-size:13px">flask</a> <a href="/tags/fn/" style="font-size:13px">fn</a> <a href="/tags/fp/" style="font-size:13px">fp</a> <a href="/tags/free/" style="font-size:13px">free</a> <a href="/tags/geojson/" style="font-size:13px">geojson</a> <a href="/tags/git/" style="font-size:13px">git</a> <a href="/tags/github/" style="font-size:13px">github</a> <a href="/tags/github-pages/" style="font-size:13px">github pages</a> <a href="/tags/go/" style="font-size:13px">go</a> <a href="/tags/gunicorn/" style="font-size:13px">gunicorn</a> <a href="/tags/hadoop/" style="font-size:13px">hadoop</a> <a href="/tags/hexo/" style="font-size:13.29px">hexo</a> <a href="/tags/http/" style="font-size:13px">http</a> <a href="/tags/ios/" style="font-size:13px">ios</a> <a href="/tags/jdk/" style="font-size:13px">jdk</a> <a href="/tags/jmeter/" style="font-size:13.29px">jmeter</a> <a href="/tags/jre/" style="font-size:13px">jre</a> <a href="/tags/json/" style="font-size:13px">json</a> <a href="/tags/jupyter-notebook/" style="font-size:13px">jupyter notebook</a> <a href="/tags/k6/" style="font-size:13px">k6</a> <a href="/tags/kafka/" style="font-size:13.14px">kafka</a> <a href="/tags/kafka-topic-sh/" style="font-size:13px">kafka-topic.sh</a> <a href="/tags/lambda/" style="font-size:13.14px">lambda</a> <a href="/tags/laravel/" style="font-size:13px">laravel</a> <a href="/tags/linux/" style="font-size:13.86px">linux</a> <a href="/tags/list/" style="font-size:13px">list</a> <a href="/tags/locust/" style="font-size:13.14px">locust</a> <a href="/tags/makefile/" style="font-size:13px">makefile</a> <a href="/tags/metaclass/" style="font-size:13px">metaclass</a> <a href="/tags/mfs/" style="font-size:13px">mfs</a> <a href="/tags/mysql/" style="font-size:13px">mysql</a> <a href="/tags/next/" style="font-size:13.14px">next</a> <a href="/tags/nio/" style="font-size:13px">nio</a> <a href="/tags/nmake/" style="font-size:13px">nmake</a> <a href="/tags/npm/" style="font-size:13px">npm</a> <a href="/tags/paramiko/" style="font-size:13px">paramiko</a> <a href="/tags/partition/" style="font-size:13.14px">partition</a> <a href="/tags/pdf/" style="font-size:13px">pdf</a> <a href="/tags/perf/" style="font-size:13px">perf</a> <a href="/tags/php/" style="font-size:13px">php</a> <a href="/tags/php5-fpm/" style="font-size:13px">php5-fpm</a> <a href="/tags/php7-fpm/" style="font-size:13px">php7-fpm</a> <a href="/tags/pip/" style="font-size:13px">pip</a> <a href="/tags/pytest/" style="font-size:13px">pytest</a> <a href="/tags/python/" style="font-size:14px">python</a> <a href="/tags/pythonic/" style="font-size:13px">pythonic</a> <a href="/tags/qgis/" style="font-size:13px">qgis</a> <a href="/tags/re/" style="font-size:13px">re</a> <a href="/tags/replica/" style="font-size:13.14px">replica</a> <a href="/tags/roc/" style="font-size:13px">roc</a> <a href="/tags/samba/" style="font-size:13px">samba</a> <a href="/tags/scp/" style="font-size:13px">scp</a> <a href="/tags/seaweedfs/" style="font-size:13px">seaweedfs</a> <a href="/tags/sorted/" style="font-size:13px">sorted</a> <a href="/tags/spark/" style="font-size:13.57px">spark</a> <a href="/tags/ssh/" style="font-size:13.14px">ssh</a> <a href="/tags/sudo/" style="font-size:13px">sudo</a> <a href="/tags/supervisor/" style="font-size:13px">supervisor</a> <a href="/tags/systemtap/" style="font-size:13px">systemtap</a> <a href="/tags/time/" style="font-size:13px">time</a> <a href="/tags/timeout/" style="font-size:13px">timeout</a> <a href="/tags/tmux/" style="font-size:13px">tmux</a> <a href="/tags/tn/" style="font-size:13px">tn</a> <a href="/tags/tp/" style="font-size:13px">tp</a> <a href="/tags/ubuntu/" style="font-size:13.29px">ubuntu</a> <a href="/tags/unittest/" style="font-size:13px">unittest</a> <a href="/tags/vue/" style="font-size:13px">vue</a> <a href="/tags/websocket/" style="font-size:13px">websocket</a> <a href="/tags/zip/" style="font-size:13px">zip</a> <a href="/tags/%E4%BA%91/" style="font-size:13px">云</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size:13px">人工智能</a> <a href="/tags/%E4%BF%9D%E9%99%A9/" style="font-size:13px">保险</a> <a href="/tags/%E5%85%A8%E9%93%BE%E8%B7%AF/" style="font-size:13px">全链路</a> <a href="/tags/%E5%87%BD%E6%95%B0/" style="font-size:13px">函数</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size:13.29px">分布式</a> <a href="/tags/%E5%88%86%E6%94%AF%E7%AD%96%E7%95%A5/" style="font-size:13px">分支策略</a> <a href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" style="font-size:13px">单例模式</a> <a href="/tags/%E5%8D%95%E6%B5%8B/" style="font-size:13.29px">单测</a> <a href="/tags/%E5%8E%8B%E6%B5%8B/" style="font-size:13.14px">压测</a> <a href="/tags/%E5%90%8E%E5%8F%B0/" style="font-size:13px">后台</a> <a href="/tags/%E5%90%8E%E5%8F%B0%E5%85%B3%E7%B3%BB/" style="font-size:13px">后台关系</a> <a href="/tags/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" style="font-size:13px">域名解析</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size:13.71px">大数据</a> <a href="/tags/%E5%A4%B4%E6%96%87%E4%BB%B6/" style="font-size:13px">头文件</a> <a href="/tags/%E5%AD%98%E5%82%A8/" style="font-size:13px">存储</a> <a href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" style="font-size:13px">性能分析</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size:13.86px">性能测试</a> <a href="/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/" style="font-size:13.14px">持续集成</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size:13px">排序</a> <a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size:13px">插件</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size:13px">教程</a> <a href="/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/" style="font-size:13px">斐波那契数列</a> <a href="/tags/%E6%97%A5%E6%9C%9F/" style="font-size:13px">日期</a> <a href="/tags/%E6%97%B6%E9%97%B4/" style="font-size:13px">时间</a> <a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size:13.43px">测试</a> <a href="/tags/%E7%81%AB%E7%84%B0%E5%9B%BE/" style="font-size:13px">火焰图</a> <a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size:13px">电影</a> <a href="/tags/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98/" style="font-size:13px">百度网盘</a> <a href="/tags/%E7%9B%91%E6%8E%A7/" style="font-size:13px">监控</a> <a href="/tags/%E7%9F%A9%E9%98%B5/" style="font-size:13px">矩阵</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size:13px">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83/" style="font-size:13px">网络环境</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" style="font-size:13.29px">自动驾驶</a> <a href="/tags/%E8%A1%8C%E6%94%BF%E5%8C%BA/" style="font-size:13px">行政区</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size:13.14px">设计模式</a> <a href="/tags/%E8%AF%8D%E4%BA%91/" style="font-size:13px">词云</a> <a href="/tags/%E8%AF%AD%E6%B3%95%E7%B3%96/" style="font-size:13px">语法糖</a> <a href="/tags/%E8%B1%86%E7%93%A3/" style="font-size:13px">豆瓣</a> <a href="/tags/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" style="font-size:13px">责任链模式</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size:13px">递归</a> <a href="/tags/%E9%81%93%E6%A0%BC%E6%8B%89%E6%96%AF/" style="font-size:13px">道格拉斯</a> <a href="/tags/%E9%97%AD%E5%8C%85/" style="font-size:13px">闭包</a></div></div><div class="widget"><h3 class="widget-title">归档</h3><div class="widget-body"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li></ul></div></div><div class="widget"><h3 class="widget-title">最新文章</h3><div class="widget-body"><ul class="recent-post-list list-unstyled no-thumbnail"><li><div class="item-inner"><p class="item-category"></p><p class="item-title"><a href="/2022/11/19/ToB%E4%B8%9A%E5%8A%A1%E7%90%86%E8%A7%A3/" class="title">ToB业务理解</a></p><p class="item-date"><time datetime="2022-11-19T06:16:47.000Z" itemprop="datePublished">2022-11-19</time></p></div></li><li><div class="item-inner"><p class="item-category"><a class="category-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></p><p class="item-title"><a href="/2022/11/15/%E5%8E%8B%E6%B5%8B-%E5%9F%BA%E4%BA%8EK6%E7%9A%84web%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%92%8C%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="title">压测-基于K6的web性能测试和实时监控解决方案</a></p><p class="item-date"><time datetime="2022-11-15T08:38:42.000Z" itemprop="datePublished">2022-11-15</time></p></div></li><li><div class="item-inner"><p class="item-category"><a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></p><p class="item-title"><a href="/2022/11/14/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6-GeoJson%E5%AD%A6%E4%B9%A0/" class="title">自动驾驶-GeoJson学习</a></p><p class="item-date"><time datetime="2022-11-14T08:50:42.000Z" itemprop="datePublished">2022-11-14</time></p></div></li><li><div class="item-inner"><p class="item-category"><a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></p><p class="item-title"><a href="/2022/11/14/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6-QGIS%E4%BD%BF%E7%94%A8/" class="title">自动驾驶-QGIS使用</a></p><p class="item-date"><time datetime="2022-11-14T08:49:11.000Z" itemprop="datePublished">2022-11-14</time></p></div></li><li><div class="item-inner"><p class="item-category"><a class="category-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></p><p class="item-title"><a href="/2022/11/14/%E5%90%8E%E5%8F%B0%E6%B5%8B%E8%AF%95%E5%85%A5%E9%97%A8-%E5%A6%82%E4%BD%95%E5%81%9A%E5%90%8E%E5%8F%B0%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" class="title">后台测试入门-如何做后台性能测试</a></p><p class="item-date"><time datetime="2022-11-14T05:31:58.000Z" itemprop="datePublished">2022-11-14</time></p></div></li></ul></div></div></div></aside><aside class="sidebar sidebar-toc collapse in" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar"><div class="slimContent"><nav id="toc" class="article-toc"><h3 class="toc-title">文章目录</h3><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">性能需求分析：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E8%B0%83%E7%A0%94%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">系统信息调研：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E4%BF%A1%E6%81%AF%E8%B0%83%E7%A0%94%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">业务信息调研：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E9%9C%80%E6%B1%82%E8%AF%84%E4%BC%B0%EF%BC%9A"><span class="toc-number">1.3.</span> <span class="toc-text">性能需求评估：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E8%A7%92%E5%BA%A6"><span class="toc-number">1.3.1.</span> <span class="toc-text">业务角度:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%A7%92%E5%BA%A6%EF%BC%9A%E7%B3%BB%E7%BB%9F%E5%8F%88%E5%8F%AF%E4%BB%A5%E4%BB%8E%E4%BB%A5%E4%B8%8B3%E4%B8%AA%E6%96%B9%E9%9D%A2%E8%BF%9B%E8%A1%8C%E5%88%86%E6%9E%90"><span class="toc-number">1.3.2.</span> <span class="toc-text">系统角度：系统又可以从以下3个方面进行分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E7%82%B9%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text">确定性能测试点：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%EF%BC%9A"><span class="toc-number">1.5.</span> <span class="toc-text">确定性能指标：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">性能测试准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">测试环境准备：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%9C%BA%E6%99%AF%E8%AE%BE%E8%AE%A1%EF%BC%9A%E6%A0%B9%E6%8D%AE%E6%80%A7%E8%83%BD%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E6%9D%A5%E8%AE%BE%E8%AE%A1%E7%AC%A6%E5%90%88%E7%94%A8%E6%88%B7%E4%BD%BF%E7%94%A8%E4%B9%A0%E6%83%AF%E7%9A%84%E5%9C%BA%E6%99%AF%EF%BC%8C%E5%9C%BA%E6%99%AF%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%A5%BD%E4%B8%8D%E5%A5%BD%E7%9B%B4%E6%8E%A5%E5%BD%B1%E5%93%8D%E5%88%B0%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E7%9A%84%E6%95%88%E6%9E%9C%E3%80%82"><span class="toc-number">2.2.</span> <span class="toc-text">测试场景设计：根据性能需求分析来设计符合用户使用习惯的场景，场景设计的好不好直接影响到性能测试的效果。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%B7%A5%E5%85%B7%E5%87%86%E5%A4%87%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">性能工具准备：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%84%9A%E6%9C%AC%E5%87%86%E5%A4%87"><span class="toc-number">2.4.</span> <span class="toc-text">测试脚本准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87%EF%BC%9A"><span class="toc-number">2.5.</span> <span class="toc-text">测试数据准备：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%EF%BC%9A%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E5%85%B6%E5%AE%83%E5%85%B6%E5%AE%83%E5%85%B3%E8%81%94%E7%B3%BB%E7%BB%9F%E6%88%96%E4%B8%93%E4%B8%9A%E4%BA%BA%E5%A3%AB%E5%A6%82DBA%E9%85%8D%E5%90%88%E7%9A%84%EF%BC%8C%E4%B9%9F%E9%9C%80%E8%A6%81%E6%8F%90%E5%89%8D%E8%BF%9B%E8%A1%8C%E6%B2%9F%E9%80%9A%E3%80%82"><span class="toc-number">2.6.</span> <span class="toc-text">其它：如果需要其它其它关联系统或专业人士如DBA配合的，也需要提前进行沟通。</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C"><span class="toc-number">3.</span> <span class="toc-text">性能测试执行</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90%E4%B8%8E%E8%B0%83%E4%BC%98"><span class="toc-number">4.</span> <span class="toc-text">结果分析与调优</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E4%B8%8E%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">测试报告与总结</span></a></li></ol></nav></div></aside><main class="main" role="main"><div class="content"><article id="post-性能测试总结-测试流程" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting"><div class="article-header"><h1 class="article-title" itemprop="name">性能测试总结-测试流程</h1><div class="article-meta"><span class="article-date"><i class="icon icon-calendar-check"></i> <a href="/2019/08/10/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" class="article-date"><time datetime="2019-08-10T11:54:49.000Z" itemprop="datePublished">2019-08-10</time> </a></span><span class="article-category"><i class="icon icon-folder"></i> <a class="article-category-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a> </span><span class="article-tag"><i class="icon icon-tags"></i> <a class="article-tag-link-link" href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" rel="tag">性能测试</a> </span><span class="article-read hidden-xs"><i class="icon icon-eye-fill" aria-hidden="true"></i> <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span> </span></span><span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/08/10/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/#comments" class="article-comment-link">评论</a></span> <span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.4k(字)</span> <span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 11(分)</span></div></div><div class="article-entry marked-body" itemprop="articleBody"><p>本文主要介绍下性能测试的基本流程，性能测试从实际执行层面来看，测试的过程一般分为这么几个阶段，如下图：<br><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fynqexw9ogj30cq0n2dh1.jpg"></p><span id="more"></span><p>下面分别介绍下每个阶段具体需要做什么：</p><h1 id="性能需求分析："><a href="#性能需求分析：" class="headerlink" title="性能需求分析："></a>性能需求分析：</h1><p>性能需求分析是整个性能测试工作开展的基础，如果连性能的需求都没弄清楚，后面的性能测试执行其实是没有任何意义的，而且性能需求分析做的好不好直接影响到性能测试的结果。</p><p>一些性能测试人员常犯的错误就是测试一开始就直接用工具对系统进行加压，没有弄清楚性能测试的目的，稀里糊涂做完了以后也不知道结果是否满足性能需求。市面上的书籍也大都是直接讲性能测试工具如LR，jmeter如何使用，导致很多新手一提到性能测试就直接拿工具来进行录制回放，使得很多人认为会使用性能测试工具就等于会性能测试了，殊不知工具其实只是性能测试过程中很小的一部分。</p><p>在需求分析阶段，测试人员需要与项目相关的人员进行沟通，收集各种项目资料，对系统进行分析，建立性能测试数据模型，并将其转化为可衡量的具体性能指标，确认测试的目标。所以性能测试需求分析过程是繁杂的，需要测试人员有深厚的性能理论知识，除此之外还需要懂一些数学建模的知识来帮助我们建立性能测试模型。</p><p>首先，让我们来看看通过性能需求分析我们需要得出哪些结论或目标：</p><ul><li>明确倒底要不要做性能测试？性能测试的目的是什么？</li><li>明确被测系统是什么？被测试系统的相关技术信息如：架构、平台、协议等</li><li>明确被测系统的基本业务、关键业务，用户行为</li><li>明确性能测试点是什么？哪些需要测，为什么？哪些不需要测，又是为什么？</li><li>明确被测系统未来的业务拓展规划以及性能需求？</li><li>明确性能测试策略，即应该怎么测试？</li><li>明确性能测试的指标，知道测试出来的结果怎么算通过？</li></ul><p>其次，需求分析阶段我们可以从以下几个方面入手：</p><h2 id="系统信息调研："><a href="#系统信息调研：" class="headerlink" title="系统信息调研："></a>系统信息调研：</h2><p>指对被测试系统进行分析，需要对其有全面的了解和认识，这是我们做好性能测试的前提，而且在后续进行性能分析和调优时将会大有用处，试想如果连系统的架构、协议都不了解，我们如何进行准确的性能测试？如果进行性能分析与调优？</p><p>需要分析的系统信息如下（包括但不仅限于如下这些）：<br><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fynqf0teg3j30qe0iudic.jpg"></p><h2 id="业务信息调研："><a href="#业务信息调研：" class="headerlink" title="业务信息调研："></a>业务信息调研：</h2><p>指对被测试的业务进行分析，通过对业务的分析和了解，方便我们后续进行性能测试场景的确定以及性能测试指标的确定。需要分析的业务信息如下（包括但不仅限于如下这些）：<br><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fynqf3ipk0j30o00eq40d.jpg"></p><h2 id="性能需求评估："><a href="#性能需求评估：" class="headerlink" title="性能需求评估："></a>性能需求评估：</h2><p>在实施性能测试之前，我们需要对被测系统做相应的评估，主要目的是明确是否需要做性能测试。如果确定需要做性能测试，需要进一步确立性能测试点和指标，明确该测什么、性能指标是多少，测试通过or不通过的标准？性能指标也会根据情况评估，要求被测系统能满足将来一定时间段的业务压力。</p><p>判断是否进行性能测试主要从下面两个方面进行思考：</p><h3 id="业务角度"><a href="#业务角度" class="headerlink" title="业务角度:"></a>业务角度:</h3><p>　　 系统是公司内部 or 对外？系统使用的人数的多少？如果一个系统上线后基本没几个人使用，无论系统多大，设计多么复杂，并发性的性能测试都是没必要的，前期可以否决。当然，除非在功能测试阶段发现非常明显的性能问题，使得用户体验较差的，此时可进行性能测试来排查问题。</p><h3 id="系统角度：系统又可以从以下3个方面进行分析"><a href="#系统角度：系统又可以从以下3个方面进行分析" class="headerlink" title="系统角度：系统又可以从以下3个方面进行分析"></a>系统角度：系统又可以从以下3个方面进行分析</h3><ol><li>系统架构：<br>如果一个系统采用的框架是老的系统框架（通常大公司都有自己的统一框架），只是在此框架上增加一些应用，其实是没有必要做性能测试，因为老框架的使用肯定是经过了验证的。如果一个系统采用的是一种新的框架，可以考虑做性能测试。</li><li>数据库要求：<br>很多情况下，性能测试是大数据量的并发访问、修改数据库，而瓶颈在于连接数据库池的数量，而非数据库本身的负载、吞吐能力。这时，可以结合DBA的建议，来决定是否来做性能测试。</li><li>系统特殊要求：<ol><li>从实时性角度来分析，某些系统对响应时间要求比较，比如证券系统，系统的快慢直接影响客户的收益，这种情况就有作并发测试的必要，在大并发量的场景下，查看这个功能的响应时间。</li><li>从大数据量上传下载角度分析，某些系统经常需要进行较大数据量的上传和下载操作，虽然此种操作使用的人数不会太多，但是也有必要进行性能测试，确定系统能处理的最大容量，如果超过这个容量时系统需要进行相关控制，避免由于不人工误操作导致系统内存溢出或崩溃。</li></ol></li></ol><h2 id="确定性能测试点："><a href="#确定性能测试点：" class="headerlink" title="确定性能测试点："></a>确定性能测试点：</h2><p>在上面第3点中，我们简单分析了如何确定一个系统是否需要做性能测试。下面简单总结下如果一个系统确定要做性能测试，我们如何确定被测系统的性能测试点？<br>我们可以从下面几个方面进行分析：</p><ol><li><p>关键业务：<br>确定被测项目是否属于关键业务，有哪些主要的业务逻辑点，特别是跟交易相关的功能点。例如转账，扣款等接口。如果项目（或功能点）不属于关键业务（或关键业务点），则可转入下面。</p></li><li><p>日请求量：<br>确定被测项目各功能点的日请求量（可以统计不同时间粒度下的请求量如：小时，日，周，月）。如果日请求量很高，系统压力很大，而且又是关键业务，该项目需要做性能测试，而且关键业务点，可以被确定为性能点。</p></li><li><p>逻辑复杂度：<br>判定被测项目各功能点的逻辑复杂度。如果一个主要业务的日请求量不高，但是逻辑很复杂，则也需要通过性能测试。原因是，在分布式方式的调用中，当某一个环节响应较慢，就会影响到其它环节，造成雪崩效应。</p></li><li><p>运营推广活动：<br>根据运营的推广计划来判定待测系统未来的压力。未雨绸缪、防患于未然、降低运营风险是性能测试的主要目标。被测系统的性能不仅能满足当前压力，更需要满足未来一定时间段内的压力。因此，事先了解运营推广计划，对性能点的制定有很大的作用。例如，运营计划做活动，要求系统每天能支撑多少 PV、多少 UV，或者一个季度后，需要能支撑多大的访问量等等数据。当新项目（或功能点）属于运营重点推广计划范畴之内，则该项目（或功能点）也需要做性能测试。</p></li></ol><p>以上 4 点，是相辅相成、环环相扣的。在实际工作中应该具体问题具体分析。例如，当一个功能点不满足以上 4 点，但又属于资源高消耗（内存、CPU），也可列入性能测试点行列。</p><h2 id="确定性能指标："><a href="#确定性能指标：" class="headerlink" title="确定性能指标："></a>确定性能指标：</h2><p>性能需求分析一个很重要的目标就是需要确定后期性能分析用的性能指标，性能指标有很多，可以根据具体项目选取和设定，而具体的指标值则需要根据业务特点进行设定，本文不详细进行阐述，后续可考虑就此单独写一篇。</p><h1 id="性能测试准备"><a href="#性能测试准备" class="headerlink" title="性能测试准备"></a>性能测试准备</h1><h2 id="测试环境准备："><a href="#测试环境准备：" class="headerlink" title="测试环境准备："></a>测试环境准备：</h2><ol><li>系统运行环境：这个通常就是我们的测试环境，有些时候需求比较多，做性能测试担心把环境搞跨了影响其它的功能测试，可能需要重新搭建一套专门用来做性能测试的环境。</li><li>执行机环境：这个就是用来生成负载的执行机，通常需要在物理机上运行，而物理机又是稀缺资源，所以我们每次做性能测试都需要提前准备好执行机环境。</li></ol><h2 id="测试场景设计：根据性能需求分析来设计符合用户使用习惯的场景，场景设计的好不好直接影响到性能测试的效果。"><a href="#测试场景设计：根据性能需求分析来设计符合用户使用习惯的场景，场景设计的好不好直接影响到性能测试的效果。" class="headerlink" title="测试场景设计：根据性能需求分析来设计符合用户使用习惯的场景，场景设计的好不好直接影响到性能测试的效果。"></a>测试场景设计：根据性能需求分析来设计符合用户使用习惯的场景，场景设计的好不好直接影响到性能测试的效果。</h2><h2 id="性能工具准备："><a href="#性能工具准备：" class="headerlink" title="性能工具准备："></a>性能工具准备：</h2><ol><li>负载工具：根据需求分析和系统特点选择合适的负载工具，比如LR、Jmeter或galting等</li><li>监控工具：准备性能测试时的服务器资源、JVM、数据库监控工具，以便进行后续的性能测试分析与调优。</li></ol><h2 id="测试脚本准备"><a href="#测试脚本准备" class="headerlink" title="测试脚本准备"></a>测试脚本准备</h2><p>如果性能测试工具不能满足被测系统的要求或只能满足部分要求时，需要我们自己开发脚本配合工具进行性能测试。</p><h2 id="测试数据准备："><a href="#测试数据准备：" class="headerlink" title="测试数据准备："></a>测试数据准备：</h2><ol><li>负载测试数据：并发测试时需要多少数据？比如登录场景？</li><li>DB数据量大小：为了尽量符合生产场景，需要模拟线上大量数据情况，那么要往数据库里提前插入一定的数据量。这可能需要花费一些时间，特点是关联系统较多，逻辑复杂的业务可能同时涉及多张表。</li></ol><h2 id="其它：如果需要其它其它关联系统或专业人士如DBA配合的，也需要提前进行沟通。"><a href="#其它：如果需要其它其它关联系统或专业人士如DBA配合的，也需要提前进行沟通。" class="headerlink" title="其它：如果需要其它其它关联系统或专业人士如DBA配合的，也需要提前进行沟通。"></a>其它：如果需要其它其它关联系统或专业人士如DBA配合的，也需要提前进行沟通。</h2><h1 id="性能测试执行"><a href="#性能测试执行" class="headerlink" title="性能测试执行"></a>性能测试执行</h1><ol><li><p>人工边执行边分析<br>通常我们做性能测试都是人工执行并随时观察系统运行的情况、资源的使用率等指标。性能测试的吸引力之一就在于它的不可预知性。当我们在做性能测试的时候遇到跟预期不符的情况很正常，这个时候需要冷静的分析。但这个过程可能会很慢长，需要不断的调整系统配置或程序代码来定位问题，耗时耗人力。特别是在当前敏捷开发模式比较流行的大环境下，版本发布非常频繁且版本周期短（通常1~2周一个版本），没有那么长的时间来做性能测试。</p></li><li><p>无人值守执行性能测试<br>无人值守是最理想化的目标，目前我们也朝着这个方向努力。无人值守不是说没有人力介入，而是把人为的分析和执行过程分离，执行过程只是机器服从指令的运行而已。通常测试环境在白天比较繁忙，出现性能问题及定位难度较大且会影响功能测试。所以一般性能测试最好在晚上或周末进行，在相对较安静的条件有利于测试结果的稳定性。这种方法也相对比较适合敏捷的模式，不需要人工一直守着。只需要在拿到结果后进行分析就好了。同进，这种方式对测试人员能力的要求比较高，需要我们能进行自动化的收集各种监控数据、生成报表便于后续分析。</p></li></ol><h1 id="结果分析与调优"><a href="#结果分析与调优" class="headerlink" title="结果分析与调优"></a>结果分析与调优</h1><p>关于性能分析与调优这是一个比较大的话题，后续会单独进行总结和分析。</p><h1 id="测试报告与总结"><a href="#测试报告与总结" class="headerlink" title="测试报告与总结"></a>测试报告与总结</h1><ol><li><p>性能测试报告是性能测试的里程碑，通过报告能展示出性能测试的最终成果，展示系统性能是否符合需求，是否有性能隐患。性能测试报告中需要阐明性能测试目标、性能测试环境、性能测试数据构造规则、性能测试策略、性能测试结果、性能测试调优说明、性能测试过程中遇到的问题和解决办法等。</p></li><li><p>性能测试工程师完成该次性能测试后，需要将测试结果进行备案，并做为下次性能测试的基线标准，具体包括性能测试结果数据、性能测试瓶颈和调优方案等。同时需要将测试过程中遇到的问题，包括代码瓶颈、配置项问题、数据问题和沟通问题，以及解决办法或解决方案，进行知识沉淀。</p></li></ol></div><div class="article-footer"><blockquote class="mt-2x"><ul class="post-copyright list-unstyled"><li class="post-copyright-link hidden-xs"><strong>本文链接：</strong> <a href="http://vwin.github.io/2019/08/10/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" title="性能测试总结-测试流程" target="_blank" rel="external">http://vwin.github.io/2019/08/10/性能测试总结-测试流程/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！</li></ul></blockquote><div class="panel panel-default panel-badger"><div class="panel-body"><figure class="media"><div class="media-left"><a href="https://github.com/vwin" target="_blank" class="img-burn thumb-sm visible-lg"><img src="/images/avatar.jpg" class="img-rounded w-full" alt=""></a></div><div class="media-body"><h3 class="media-heading"><a href="https://github.com/vwin" target="_blank"><span class="text-dark">will</span><small class="ml-1x">Software Development Engineer in Test &amp; Devops Engineer</small></a></h3><div>测试开发架构师 &amp;&amp; 工程效能专家</div></div></figure></div></div></div></article><section id="comments"></section></div><nav class="bar bar-footer clearfix" data-stick-bottom><div class="bar-inner"><ul class="pager pull-left"><li class="prev"><a href="/2020/01/08/%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E6%A8%A1%E6%8B%9F%E5%92%8C%E6%B5%8B%E8%AF%95/" title="网络环境模拟和测试"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a></li><li class="next"><a href="/2019/08/09/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="性能测试总结-测试工具"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a></li><li class="toggle-toc"><a class="toggle-btn" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button"><span>[&nbsp;</span><span>文章目录</span> <i class="text-collapsed icon icon-anchor"></i> <i class="text-in icon icon-close"></i> <span>]</span></a></li></ul><div class="bar-right"><div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div></div></div></nav></main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter"><ul class="social-links"><li><a href="https://github.com/vwin" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li><li><a href="https://yuleweici.com/yuleweici/" target="_blank" title="Link" data-toggle="tooltip" data-placement="top"><i class="icon icon-link"></i></a></li><li><a href="mailto:crazyboyspecial@qq.com" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li><li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li></ul><div class="copyright">&copy; 2022 V</div></footer><script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script><script>window.jQuery||document.write('<script src="js/jquery.min.js"><\/script>')</script><script src="/js/plugin.min.js"></script><script src="/js/application.js"></script><script>!function(T){T.INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(未命名)"},ROOT_URL:"/",CONTENT_URL:"/content.json"}}(window)</script><script src="/js/insight.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script><script>$(document).ready((function(){$("article img").not("[hidden]").not(".panel-body img").each((function(){var a=$(this),t=a.attr("alt"),n=a.parent("a");if(n.length<1){var e=this.getAttribute("src"),r=e.lastIndexOf("?");-1!=r&&(e=e.substring(0,r)),n=a.wrap('<a href="'+e+'"></a>').parent("a")}n.attr("data-fancybox","images"),t&&n.attr("data-caption",t)})),$().fancybox({selector:'[data-fancybox="images"]',hash:!1,loop:!1})}))</script></body></html>
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="code-w6zMFQOLpu" />
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=yes,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>性能测试总结-测试流程 | 予乐</title>
+  <meta name="description" content="本文主要介绍下性能测试的基本流程，性能测试从实际执行层面来看，测试的过程一般分为这么几个阶段，如下图：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能测试总结-测试流程">
+<meta property="og:url" content="http://vwin.github.io/2019/08/10/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:site_name" content="V&#39;s BLOG">
+<meta property="og:description" content="本文主要介绍下性能测试的基本流程，性能测试从实际执行层面来看，测试的过程一般分为这么几个阶段，如下图：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fynqexw9ogj30cq0n2dh1.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fynqf0teg3j30qe0iudic.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fynqf3ipk0j30o00eq40d.jpg">
+<meta property="article:published_time" content="2019-08-10T11:54:49.000Z">
+<meta property="article:modified_time" content="2022-11-19T15:58:07.773Z">
+<meta property="article:author" content="V">
+<meta property="article:tag" content="性能测试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fynqexw9ogj30cq0n2dh1.jpg">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://vwin.github.io/2019/08/10/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="V&#39;s BLOG" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8082412711ea4c547c7fdf0e87eb19fb";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/vwin" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">will</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Software Development Engineer in Test &amp; Devops Engineer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-bookmark">
+          <a href="/bookmark">
+            
+            <i class="icon icon-book"></i>
+            
+            <span class="menu-title">书签</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/vwin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://yuleweici.com/yuleweici/" target="_blank" title="Link" data-toggle=tooltip data-placement=top><i class="icon icon-link"></i></a></li>
+        
+        <li><a href="mailto:crazyboyspecial@qq.com" target="_blank" title="Email" data-toggle=tooltip data-placement=top><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验.<br><a style='color:red' target="_blank" href="https://yuleweici.com/yuleweici-vuepress/">博客-Vuepress</a><br><a style='color:green' target="_blank" href="http://yuleweici.com/yuleweici-docsify/#/">博客-Docsify</a> </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C/">工作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span class="category-list-count">60</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI%E8%AF%84%E6%B5%8B/" rel="tag">AI评测</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Conan/" rel="tag">Conan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Derrick/" rel="tag">Derrick</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Devops/" rel="tag">Devops</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Go/" rel="tag">Go</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Grafana/" rel="tag">Grafana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IaaS/" rel="tag">IaaS</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iaas/" rel="tag">Iaas</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Prometheus/" rel="tag">Prometheus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QPS/" rel="tag">QPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TPS/" rel="tag">TPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UI%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">UI自动化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aio/" rel="tag">aio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/airtest/" rel="tag">airtest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bio/" rel="tag">bio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bootstrap/" rel="tag">bootstrap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broker/" rel="tag">broker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/buffer/" rel="tag">buffer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cached/" rel="tag">cached</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/celery/" rel="tag">celery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmake/" rel="tag">cmake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cnpm/" rel="tag">cnpm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consumer/" rel="tag">consumer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/date/" rel="tag">date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/datetime/" rel="tag">datetime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/describe/" rel="tag">describe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dict/" rel="tag">dict</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/element-ui/" rel="tag">element ui</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/" rel="tag">flask</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fn/" rel="tag">fn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fp/" rel="tag">fp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/free/" rel="tag">free</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geojson/" rel="tag">geojson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github-pages/" rel="tag">github pages</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/" rel="tag">go</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gunicorn/" rel="tag">gunicorn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/" rel="tag">ios</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdk/" rel="tag">jdk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jmeter/" rel="tag">jmeter</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jre/" rel="tag">jre</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/json/" rel="tag">json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jupyter-notebook/" rel="tag">jupyter notebook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k6/" rel="tag">k6</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/" rel="tag">kafka</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka-topic-sh/" rel="tag">kafka-topic.sh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lambda/" rel="tag">lambda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/list/" rel="tag">list</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/locust/" rel="tag">locust</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/makefile/" rel="tag">makefile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/metaclass/" rel="tag">metaclass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfs/" rel="tag">mfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/" rel="tag">next</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nio/" rel="tag">nio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nmake/" rel="tag">nmake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/" rel="tag">npm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paramiko/" rel="tag">paramiko</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/partition/" rel="tag">partition</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pdf/" rel="tag">pdf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/perf/" rel="tag">perf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php5-fpm/" rel="tag">php5-fpm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php7-fpm/" rel="tag">php7-fpm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pip/" rel="tag">pip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytest/" rel="tag">pytest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pythonic/" rel="tag">pythonic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qgis/" rel="tag">qgis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/re/" rel="tag">re</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/replica/" rel="tag">replica</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/roc/" rel="tag">roc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/samba/" rel="tag">samba</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scp/" rel="tag">scp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seaweedfs/" rel="tag">seaweedfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sorted/" rel="tag">sorted</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/" rel="tag">spark</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/" rel="tag">ssh</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sudo/" rel="tag">sudo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/supervisor/" rel="tag">supervisor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemtap/" rel="tag">systemtap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/time/" rel="tag">time</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/timeout/" rel="tag">timeout</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tmux/" rel="tag">tmux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tn/" rel="tag">tn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tp/" rel="tag">tp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unittest/" rel="tag">unittest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/" rel="tag">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zip/" rel="tag">zip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%91/" rel="tag">云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%9D%E9%99%A9/" rel="tag">保险</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E9%93%BE%E8%B7%AF/" rel="tag">全链路</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0/" rel="tag">函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag">分布式</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%94%AF%E7%AD%96%E7%95%A5/" rel="tag">分支策略</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" rel="tag">单例模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E6%B5%8B/" rel="tag">单测</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%8B%E6%B5%8B/" rel="tag">压测</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E5%8F%B0/" rel="tag">后台</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E5%8F%B0%E5%85%B3%E7%B3%BB/" rel="tag">后台关系</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" rel="tag">域名解析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%B4%E6%96%87%E4%BB%B6/" rel="tag">头文件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%82%A8/" rel="tag">存储</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" rel="tag">性能分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" rel="tag">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/" rel="tag">持续集成</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%92%E4%BB%B6/" rel="tag">插件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/" rel="tag">斐波那契数列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A5%E6%9C%9F/" rel="tag">日期</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%B6%E9%97%B4/" rel="tag">时间</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8B%E8%AF%95/" rel="tag">测试</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%81%AB%E7%84%B0%E5%9B%BE/" rel="tag">火焰图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%BD%B1/" rel="tag">电影</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98/" rel="tag">百度网盘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%91%E6%8E%A7/" rel="tag">监控</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A9%E9%98%B5/" rel="tag">矩阵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83/" rel="tag">网络环境</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" rel="tag">自动驾驶</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A1%8C%E6%94%BF%E5%8C%BA/" rel="tag">行政区</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%8D%E4%BA%91/" rel="tag">词云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95%E7%B3%96/" rel="tag">语法糖</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B1%86%E7%93%A3/" rel="tag">豆瓣</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" rel="tag">责任链模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%81%93%E6%A0%BC%E6%8B%89%E6%96%AF/" rel="tag">道格拉斯</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AI%E8%AF%84%E6%B5%8B/" style="font-size: 13px;">AI评测</a> <a href="/tags/C/" style="font-size: 13.29px;">C++</a> <a href="/tags/CI/" style="font-size: 13px;">CI</a> <a href="/tags/Conan/" style="font-size: 13px;">Conan</a> <a href="/tags/Derrick/" style="font-size: 13px;">Derrick</a> <a href="/tags/Devops/" style="font-size: 13px;">Devops</a> <a href="/tags/Go/" style="font-size: 13px;">Go</a> <a href="/tags/Grafana/" style="font-size: 13px;">Grafana</a> <a href="/tags/HTML/" style="font-size: 13px;">HTML</a> <a href="/tags/IaaS/" style="font-size: 13.29px;">IaaS</a> <a href="/tags/Iaas/" style="font-size: 13.14px;">Iaas</a> <a href="/tags/Jenkins/" style="font-size: 13.14px;">Jenkins</a> <a href="/tags/Prometheus/" style="font-size: 13px;">Prometheus</a> <a href="/tags/Python/" style="font-size: 13.14px;">Python</a> <a href="/tags/QPS/" style="font-size: 13px;">QPS</a> <a href="/tags/TPS/" style="font-size: 13px;">TPS</a> <a href="/tags/UI%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 13px;">UI自动化</a> <a href="/tags/Ubuntu/" style="font-size: 13px;">Ubuntu</a> <a href="/tags/aio/" style="font-size: 13px;">aio</a> <a href="/tags/airtest/" style="font-size: 13px;">airtest</a> <a href="/tags/bio/" style="font-size: 13px;">bio</a> <a href="/tags/bootstrap/" style="font-size: 13px;">bootstrap</a> <a href="/tags/broker/" style="font-size: 13px;">broker</a> <a href="/tags/buffer/" style="font-size: 13px;">buffer</a> <a href="/tags/c/" style="font-size: 13.14px;">c++</a> <a href="/tags/cached/" style="font-size: 13px;">cached</a> <a href="/tags/celery/" style="font-size: 13px;">celery</a> <a href="/tags/cmake/" style="font-size: 13px;">cmake</a> <a href="/tags/cnpm/" style="font-size: 13px;">cnpm</a> <a href="/tags/consumer/" style="font-size: 13px;">consumer</a> <a href="/tags/date/" style="font-size: 13px;">date</a> <a href="/tags/datetime/" style="font-size: 13px;">datetime</a> <a href="/tags/describe/" style="font-size: 13px;">describe</a> <a href="/tags/dict/" style="font-size: 13px;">dict</a> <a href="/tags/docker/" style="font-size: 13px;">docker</a> <a href="/tags/element-ui/" style="font-size: 13px;">element ui</a> <a href="/tags/flask/" style="font-size: 13px;">flask</a> <a href="/tags/fn/" style="font-size: 13px;">fn</a> <a href="/tags/fp/" style="font-size: 13px;">fp</a> <a href="/tags/free/" style="font-size: 13px;">free</a> <a href="/tags/geojson/" style="font-size: 13px;">geojson</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/github/" style="font-size: 13px;">github</a> <a href="/tags/github-pages/" style="font-size: 13px;">github pages</a> <a href="/tags/go/" style="font-size: 13px;">go</a> <a href="/tags/gunicorn/" style="font-size: 13px;">gunicorn</a> <a href="/tags/hadoop/" style="font-size: 13px;">hadoop</a> <a href="/tags/hexo/" style="font-size: 13.29px;">hexo</a> <a href="/tags/http/" style="font-size: 13px;">http</a> <a href="/tags/ios/" style="font-size: 13px;">ios</a> <a href="/tags/jdk/" style="font-size: 13px;">jdk</a> <a href="/tags/jmeter/" style="font-size: 13.29px;">jmeter</a> <a href="/tags/jre/" style="font-size: 13px;">jre</a> <a href="/tags/json/" style="font-size: 13px;">json</a> <a href="/tags/jupyter-notebook/" style="font-size: 13px;">jupyter notebook</a> <a href="/tags/k6/" style="font-size: 13px;">k6</a> <a href="/tags/kafka/" style="font-size: 13.14px;">kafka</a> <a href="/tags/kafka-topic-sh/" style="font-size: 13px;">kafka-topic.sh</a> <a href="/tags/lambda/" style="font-size: 13.14px;">lambda</a> <a href="/tags/laravel/" style="font-size: 13px;">laravel</a> <a href="/tags/linux/" style="font-size: 13.86px;">linux</a> <a href="/tags/list/" style="font-size: 13px;">list</a> <a href="/tags/locust/" style="font-size: 13.14px;">locust</a> <a href="/tags/makefile/" style="font-size: 13px;">makefile</a> <a href="/tags/metaclass/" style="font-size: 13px;">metaclass</a> <a href="/tags/mfs/" style="font-size: 13px;">mfs</a> <a href="/tags/mysql/" style="font-size: 13px;">mysql</a> <a href="/tags/next/" style="font-size: 13.14px;">next</a> <a href="/tags/nio/" style="font-size: 13px;">nio</a> <a href="/tags/nmake/" style="font-size: 13px;">nmake</a> <a href="/tags/npm/" style="font-size: 13px;">npm</a> <a href="/tags/paramiko/" style="font-size: 13px;">paramiko</a> <a href="/tags/partition/" style="font-size: 13.14px;">partition</a> <a href="/tags/pdf/" style="font-size: 13px;">pdf</a> <a href="/tags/perf/" style="font-size: 13px;">perf</a> <a href="/tags/php/" style="font-size: 13px;">php</a> <a href="/tags/php5-fpm/" style="font-size: 13px;">php5-fpm</a> <a href="/tags/php7-fpm/" style="font-size: 13px;">php7-fpm</a> <a href="/tags/pip/" style="font-size: 13px;">pip</a> <a href="/tags/pytest/" style="font-size: 13px;">pytest</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/pythonic/" style="font-size: 13px;">pythonic</a> <a href="/tags/qgis/" style="font-size: 13px;">qgis</a> <a href="/tags/re/" style="font-size: 13px;">re</a> <a href="/tags/replica/" style="font-size: 13.14px;">replica</a> <a href="/tags/roc/" style="font-size: 13px;">roc</a> <a href="/tags/samba/" style="font-size: 13px;">samba</a> <a href="/tags/scp/" style="font-size: 13px;">scp</a> <a href="/tags/seaweedfs/" style="font-size: 13px;">seaweedfs</a> <a href="/tags/sorted/" style="font-size: 13px;">sorted</a> <a href="/tags/spark/" style="font-size: 13.57px;">spark</a> <a href="/tags/ssh/" style="font-size: 13.14px;">ssh</a> <a href="/tags/sudo/" style="font-size: 13px;">sudo</a> <a href="/tags/supervisor/" style="font-size: 13px;">supervisor</a> <a href="/tags/systemtap/" style="font-size: 13px;">systemtap</a> <a href="/tags/time/" style="font-size: 13px;">time</a> <a href="/tags/timeout/" style="font-size: 13px;">timeout</a> <a href="/tags/tmux/" style="font-size: 13px;">tmux</a> <a href="/tags/tn/" style="font-size: 13px;">tn</a> <a href="/tags/tp/" style="font-size: 13px;">tp</a> <a href="/tags/ubuntu/" style="font-size: 13.29px;">ubuntu</a> <a href="/tags/unittest/" style="font-size: 13px;">unittest</a> <a href="/tags/vue/" style="font-size: 13px;">vue</a> <a href="/tags/websocket/" style="font-size: 13px;">websocket</a> <a href="/tags/zip/" style="font-size: 13px;">zip</a> <a href="/tags/%E4%BA%91/" style="font-size: 13px;">云</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 13px;">人工智能</a> <a href="/tags/%E4%BF%9D%E9%99%A9/" style="font-size: 13px;">保险</a> <a href="/tags/%E5%85%A8%E9%93%BE%E8%B7%AF/" style="font-size: 13px;">全链路</a> <a href="/tags/%E5%87%BD%E6%95%B0/" style="font-size: 13px;">函数</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 13.29px;">分布式</a> <a href="/tags/%E5%88%86%E6%94%AF%E7%AD%96%E7%95%A5/" style="font-size: 13px;">分支策略</a> <a href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">单例模式</a> <a href="/tags/%E5%8D%95%E6%B5%8B/" style="font-size: 13.29px;">单测</a> <a href="/tags/%E5%8E%8B%E6%B5%8B/" style="font-size: 13.14px;">压测</a> <a href="/tags/%E5%90%8E%E5%8F%B0/" style="font-size: 13px;">后台</a> <a href="/tags/%E5%90%8E%E5%8F%B0%E5%85%B3%E7%B3%BB/" style="font-size: 13px;">后台关系</a> <a href="/tags/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" style="font-size: 13px;">域名解析</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 13.71px;">大数据</a> <a href="/tags/%E5%A4%B4%E6%96%87%E4%BB%B6/" style="font-size: 13px;">头文件</a> <a href="/tags/%E5%AD%98%E5%82%A8/" style="font-size: 13px;">存储</a> <a href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" style="font-size: 13px;">性能分析</a> <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" style="font-size: 13.86px;">性能测试</a> <a href="/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/" style="font-size: 13.14px;">持续集成</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 13px;">排序</a> <a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size: 13px;">插件</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 13px;">教程</a> <a href="/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/" style="font-size: 13px;">斐波那契数列</a> <a href="/tags/%E6%97%A5%E6%9C%9F/" style="font-size: 13px;">日期</a> <a href="/tags/%E6%97%B6%E9%97%B4/" style="font-size: 13px;">时间</a> <a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 13.43px;">测试</a> <a href="/tags/%E7%81%AB%E7%84%B0%E5%9B%BE/" style="font-size: 13px;">火焰图</a> <a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size: 13px;">电影</a> <a href="/tags/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98/" style="font-size: 13px;">百度网盘</a> <a href="/tags/%E7%9B%91%E6%8E%A7/" style="font-size: 13px;">监控</a> <a href="/tags/%E7%9F%A9%E9%98%B5/" style="font-size: 13px;">矩阵</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83/" style="font-size: 13px;">网络环境</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" style="font-size: 13.29px;">自动驾驶</a> <a href="/tags/%E8%A1%8C%E6%94%BF%E5%8C%BA/" style="font-size: 13px;">行政区</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13.14px;">设计模式</a> <a href="/tags/%E8%AF%8D%E4%BA%91/" style="font-size: 13px;">词云</a> <a href="/tags/%E8%AF%AD%E6%B3%95%E7%B3%96/" style="font-size: 13px;">语法糖</a> <a href="/tags/%E8%B1%86%E7%93%A3/" style="font-size: 13px;">豆瓣</a> <a href="/tags/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">责任链模式</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 13px;">递归</a> <a href="/tags/%E9%81%93%E6%A0%BC%E6%8B%89%E6%96%AF/" style="font-size: 13px;">道格拉斯</a> <a href="/tags/%E9%97%AD%E5%8C%85/" style="font-size: 13px;">闭包</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/19/ToB%E4%B8%9A%E5%8A%A1%E7%90%86%E8%A7%A3/" class="title">ToB业务理解</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-19T06:16:47.000Z" itemprop="datePublished">2022-11-19</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/15/%E5%8E%8B%E6%B5%8B-%E5%9F%BA%E4%BA%8EK6%E7%9A%84web%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%92%8C%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="title">压测-基于K6的web性能测试和实时监控解决方案</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-15T08:38:42.000Z" itemprop="datePublished">2022-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/14/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6-GeoJson%E5%AD%A6%E4%B9%A0/" class="title">自动驾驶-GeoJson学习</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-14T08:50:42.000Z" itemprop="datePublished">2022-11-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/14/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6-QGIS%E4%BD%BF%E7%94%A8/" class="title">自动驾驶-QGIS使用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-14T08:49:11.000Z" itemprop="datePublished">2022-11-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/14/%E5%90%8E%E5%8F%B0%E6%B5%8B%E8%AF%95%E5%85%A5%E9%97%A8-%E5%A6%82%E4%BD%95%E5%81%9A%E5%90%8E%E5%8F%B0%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" class="title">后台测试入门-如何做后台性能测试</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-14T05:31:58.000Z" itemprop="datePublished">2022-11-14</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">性能需求分析：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E8%B0%83%E7%A0%94%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">系统信息调研：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E4%BF%A1%E6%81%AF%E8%B0%83%E7%A0%94%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">业务信息调研：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E9%9C%80%E6%B1%82%E8%AF%84%E4%BC%B0%EF%BC%9A"><span class="toc-number">1.3.</span> <span class="toc-text">性能需求评估：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E8%A7%92%E5%BA%A6"><span class="toc-number">1.3.1.</span> <span class="toc-text">业务角度:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%A7%92%E5%BA%A6%EF%BC%9A%E7%B3%BB%E7%BB%9F%E5%8F%88%E5%8F%AF%E4%BB%A5%E4%BB%8E%E4%BB%A5%E4%B8%8B3%E4%B8%AA%E6%96%B9%E9%9D%A2%E8%BF%9B%E8%A1%8C%E5%88%86%E6%9E%90"><span class="toc-number">1.3.2.</span> <span class="toc-text">系统角度：系统又可以从以下3个方面进行分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E7%82%B9%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text">确定性能测试点：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%EF%BC%9A"><span class="toc-number">1.5.</span> <span class="toc-text">确定性能指标：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">性能测试准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">测试环境准备：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%9C%BA%E6%99%AF%E8%AE%BE%E8%AE%A1%EF%BC%9A%E6%A0%B9%E6%8D%AE%E6%80%A7%E8%83%BD%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E6%9D%A5%E8%AE%BE%E8%AE%A1%E7%AC%A6%E5%90%88%E7%94%A8%E6%88%B7%E4%BD%BF%E7%94%A8%E4%B9%A0%E6%83%AF%E7%9A%84%E5%9C%BA%E6%99%AF%EF%BC%8C%E5%9C%BA%E6%99%AF%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%A5%BD%E4%B8%8D%E5%A5%BD%E7%9B%B4%E6%8E%A5%E5%BD%B1%E5%93%8D%E5%88%B0%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E7%9A%84%E6%95%88%E6%9E%9C%E3%80%82"><span class="toc-number">2.2.</span> <span class="toc-text">测试场景设计：根据性能需求分析来设计符合用户使用习惯的场景，场景设计的好不好直接影响到性能测试的效果。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%B7%A5%E5%85%B7%E5%87%86%E5%A4%87%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">性能工具准备：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%84%9A%E6%9C%AC%E5%87%86%E5%A4%87"><span class="toc-number">2.4.</span> <span class="toc-text">测试脚本准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87%EF%BC%9A"><span class="toc-number">2.5.</span> <span class="toc-text">测试数据准备：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%EF%BC%9A%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E5%85%B6%E5%AE%83%E5%85%B6%E5%AE%83%E5%85%B3%E8%81%94%E7%B3%BB%E7%BB%9F%E6%88%96%E4%B8%93%E4%B8%9A%E4%BA%BA%E5%A3%AB%E5%A6%82DBA%E9%85%8D%E5%90%88%E7%9A%84%EF%BC%8C%E4%B9%9F%E9%9C%80%E8%A6%81%E6%8F%90%E5%89%8D%E8%BF%9B%E8%A1%8C%E6%B2%9F%E9%80%9A%E3%80%82"><span class="toc-number">2.6.</span> <span class="toc-text">其它：如果需要其它其它关联系统或专业人士如DBA配合的，也需要提前进行沟通。</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C"><span class="toc-number">3.</span> <span class="toc-text">性能测试执行</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90%E4%B8%8E%E8%B0%83%E4%BC%98"><span class="toc-number">4.</span> <span class="toc-text">结果分析与调优</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E4%B8%8E%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">测试报告与总结</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-性能测试总结-测试流程" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      性能测试总结-测试流程
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/08/10/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" class="article-date">
+	  <time datetime="2019-08-10T11:54:49.000Z" itemprop="datePublished">2019-08-10</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" rel="tag">性能测试</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/08/10/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.4k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 11(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>本文主要介绍下性能测试的基本流程，性能测试从实际执行层面来看，测试的过程一般分为这么几个阶段，如下图：<br><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fynqexw9ogj30cq0n2dh1.jpg"></p>
+<span id="more"></span>
+
+<p>下面分别介绍下每个阶段具体需要做什么：</p>
+<h1 id="性能需求分析："><a href="#性能需求分析：" class="headerlink" title="性能需求分析："></a>性能需求分析：</h1><p>性能需求分析是整个性能测试工作开展的基础，如果连性能的需求都没弄清楚，后面的性能测试执行其实是没有任何意义的，而且性能需求分析做的好不好直接影响到性能测试的结果。</p>
+<p>一些性能测试人员常犯的错误就是测试一开始就直接用工具对系统进行加压，没有弄清楚性能测试的目的，稀里糊涂做完了以后也不知道结果是否满足性能需求。市面上的书籍也大都是直接讲性能测试工具如LR，jmeter如何使用，导致很多新手一提到性能测试就直接拿工具来进行录制回放，使得很多人认为会使用性能测试工具就等于会性能测试了，殊不知工具其实只是性能测试过程中很小的一部分。</p>
+<p>在需求分析阶段，测试人员需要与项目相关的人员进行沟通，收集各种项目资料，对系统进行分析，建立性能测试数据模型，并将其转化为可衡量的具体性能指标，确认测试的目标。所以性能测试需求分析过程是繁杂的，需要测试人员有深厚的性能理论知识，除此之外还需要懂一些数学建模的知识来帮助我们建立性能测试模型。</p>
+<p>首先，让我们来看看通过性能需求分析我们需要得出哪些结论或目标：</p>
+<ul>
+<li>明确倒底要不要做性能测试？性能测试的目的是什么？</li>
+<li>明确被测系统是什么？被测试系统的相关技术信息如：架构、平台、协议等</li>
+<li>明确被测系统的基本业务、关键业务，用户行为</li>
+<li>明确性能测试点是什么？哪些需要测，为什么？哪些不需要测，又是为什么？</li>
+<li>明确被测系统未来的业务拓展规划以及性能需求？</li>
+<li>明确性能测试策略，即应该怎么测试？</li>
+<li>明确性能测试的指标，知道测试出来的结果怎么算通过？</li>
+</ul>
+<p>其次，需求分析阶段我们可以从以下几个方面入手：</p>
+<h2 id="系统信息调研："><a href="#系统信息调研：" class="headerlink" title="系统信息调研："></a>系统信息调研：</h2><p>指对被测试系统进行分析，需要对其有全面的了解和认识，这是我们做好性能测试的前提，而且在后续进行性能分析和调优时将会大有用处，试想如果连系统的架构、协议都不了解，我们如何进行准确的性能测试？如果进行性能分析与调优？</p>
+<p>需要分析的系统信息如下（包括但不仅限于如下这些）：<br><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fynqf0teg3j30qe0iudic.jpg"></p>
+<h2 id="业务信息调研："><a href="#业务信息调研：" class="headerlink" title="业务信息调研："></a>业务信息调研：</h2><p>指对被测试的业务进行分析，通过对业务的分析和了解，方便我们后续进行性能测试场景的确定以及性能测试指标的确定。需要分析的业务信息如下（包括但不仅限于如下这些）：<br><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fynqf3ipk0j30o00eq40d.jpg"></p>
+<h2 id="性能需求评估："><a href="#性能需求评估：" class="headerlink" title="性能需求评估："></a>性能需求评估：</h2><p>在实施性能测试之前，我们需要对被测系统做相应的评估，主要目的是明确是否需要做性能测试。如果确定需要做性能测试，需要进一步确立性能测试点和指标，明确该测什么、性能指标是多少，测试通过or不通过的标准？性能指标也会根据情况评估，要求被测系统能满足将来一定时间段的业务压力。</p>
+<p>判断是否进行性能测试主要从下面两个方面进行思考：</p>
+<h3 id="业务角度"><a href="#业务角度" class="headerlink" title="业务角度:"></a>业务角度:</h3><p>　　 系统是公司内部 or 对外？系统使用的人数的多少？如果一个系统上线后基本没几个人使用，无论系统多大，设计多么复杂，并发性的性能测试都是没必要的，前期可以否决。当然，除非在功能测试阶段发现非常明显的性能问题，使得用户体验较差的，此时可进行性能测试来排查问题。</p>
+<h3 id="系统角度：系统又可以从以下3个方面进行分析"><a href="#系统角度：系统又可以从以下3个方面进行分析" class="headerlink" title="系统角度：系统又可以从以下3个方面进行分析"></a>系统角度：系统又可以从以下3个方面进行分析</h3><ol>
+<li>系统架构：<br>如果一个系统采用的框架是老的系统框架（通常大公司都有自己的统一框架），只是在此框架上增加一些应用，其实是没有必要做性能测试，因为老框架的使用肯定是经过了验证的。如果一个系统采用的是一种新的框架，可以考虑做性能测试。</li>
+<li>数据库要求：<br> 很多情况下，性能测试是大数据量的并发访问、修改数据库，而瓶颈在于连接数据库池的数量，而非数据库本身的负载、吞吐能力。这时，可以结合DBA的建议，来决定是否来做性能测试。</li>
+<li>系统特殊要求：<ol>
+<li>从实时性角度来分析，某些系统对响应时间要求比较，比如证券系统，系统的快慢直接影响客户的收益，这种情况就有作并发测试的必要，在大并发量的场景下，查看这个功能的响应时间。</li>
+<li>从大数据量上传下载角度分析，某些系统经常需要进行较大数据量的上传和下载操作，虽然此种操作使用的人数不会太多，但是也有必要进行性能测试，确定系统能处理的最大容量，如果超过这个容量时系统需要进行相关控制，避免由于不人工误操作导致系统内存溢出或崩溃。</li>
+</ol>
+</li>
+</ol>
+<h2 id="确定性能测试点："><a href="#确定性能测试点：" class="headerlink" title="确定性能测试点："></a>确定性能测试点：</h2><p>在上面第3点中，我们简单分析了如何确定一个系统是否需要做性能测试。下面简单总结下如果一个系统确定要做性能测试，我们如何确定被测系统的性能测试点？<br>我们可以从下面几个方面进行分析：</p>
+<ol>
+<li><p>关键业务：<br>确定被测项目是否属于关键业务，有哪些主要的业务逻辑点，特别是跟交易相关的功能点。例如转账，扣款等接口。如果项目（或功能点）不属于关键业务（或关键业务点），则可转入下面。</p>
+</li>
+<li><p>日请求量：<br>确定被测项目各功能点的日请求量（可以统计不同时间粒度下的请求量如：小时，日，周，月）。如果日请求量很高，系统压力很大，而且又是关键业务，该项目需要做性能测试，而且关键业务点，可以被确定为性能点。</p>
+</li>
+<li><p>逻辑复杂度：<br>判定被测项目各功能点的逻辑复杂度。如果一个主要业务的日请求量不高，但是逻辑很复杂，则也需要通过性能测试。原因是，在分布式方式的调用中，当某一个环节响应较慢，就会影响到其它环节，造成雪崩效应。</p>
+</li>
+<li><p>运营推广活动：<br>根据运营的推广计划来判定待测系统未来的压力。未雨绸缪、防患于未然、降低运营风险是性能测试的主要目标。被测系统的性能不仅能满足当前压力，更需要满足未来一定时间段内的压力。因此，事先了解运营推广计划，对性能点的制定有很大的作用。例如，运营计划做活动，要求系统每天能支撑多少 PV、多少 UV，或者一个季度后，需要能支撑多大的访问量等等数据。当新项目（或功能点）属于运营重点推广计划范畴之内，则该项目（或功能点）也需要做性能测试。</p>
+</li>
+</ol>
+<p>以上 4 点，是相辅相成、环环相扣的。在实际工作中应该具体问题具体分析。例如，当一个功能点不满足以上 4 点，但又属于资源高消耗（内存、CPU），也可列入性能测试点行列。</p>
+<h2 id="确定性能指标："><a href="#确定性能指标：" class="headerlink" title="确定性能指标："></a>确定性能指标：</h2><p>性能需求分析一个很重要的目标就是需要确定后期性能分析用的性能指标，性能指标有很多，可以根据具体项目选取和设定，而具体的指标值则需要根据业务特点进行设定，本文不详细进行阐述，后续可考虑就此单独写一篇。</p>
+<h1 id="性能测试准备"><a href="#性能测试准备" class="headerlink" title="性能测试准备"></a>性能测试准备</h1><h2 id="测试环境准备："><a href="#测试环境准备：" class="headerlink" title="测试环境准备："></a>测试环境准备：</h2><ol>
+<li>系统运行环境：这个通常就是我们的测试环境，有些时候需求比较多，做性能测试担心把环境搞跨了影响其它的功能测试，可能需要重新搭建一套专门用来做性能测试的环境。</li>
+<li>执行机环境：这个就是用来生成负载的执行机，通常需要在物理机上运行，而物理机又是稀缺资源，所以我们每次做性能测试都需要提前准备好执行机环境。</li>
+</ol>
+<h2 id="测试场景设计：根据性能需求分析来设计符合用户使用习惯的场景，场景设计的好不好直接影响到性能测试的效果。"><a href="#测试场景设计：根据性能需求分析来设计符合用户使用习惯的场景，场景设计的好不好直接影响到性能测试的效果。" class="headerlink" title="测试场景设计：根据性能需求分析来设计符合用户使用习惯的场景，场景设计的好不好直接影响到性能测试的效果。"></a>测试场景设计：根据性能需求分析来设计符合用户使用习惯的场景，场景设计的好不好直接影响到性能测试的效果。</h2><h2 id="性能工具准备："><a href="#性能工具准备：" class="headerlink" title="性能工具准备："></a>性能工具准备：</h2><ol>
+<li>负载工具：根据需求分析和系统特点选择合适的负载工具，比如LR、Jmeter或galting等</li>
+<li>监控工具：准备性能测试时的服务器资源、JVM、数据库监控工具，以便进行后续的性能测试分析与调优。</li>
+</ol>
+<h2 id="测试脚本准备"><a href="#测试脚本准备" class="headerlink" title="测试脚本准备"></a>测试脚本准备</h2><p>如果性能测试工具不能满足被测系统的要求或只能满足部分要求时，需要我们自己开发脚本配合工具进行性能测试。</p>
+<h2 id="测试数据准备："><a href="#测试数据准备：" class="headerlink" title="测试数据准备："></a>测试数据准备：</h2><ol>
+<li>负载测试数据：并发测试时需要多少数据？比如登录场景？</li>
+<li>DB数据量大小：为了尽量符合生产场景，需要模拟线上大量数据情况，那么要往数据库里提前插入一定的数据量。这可能需要花费一些时间，特点是关联系统较多，逻辑复杂的业务可能同时涉及多张表。</li>
+</ol>
+<h2 id="其它：如果需要其它其它关联系统或专业人士如DBA配合的，也需要提前进行沟通。"><a href="#其它：如果需要其它其它关联系统或专业人士如DBA配合的，也需要提前进行沟通。" class="headerlink" title="其它：如果需要其它其它关联系统或专业人士如DBA配合的，也需要提前进行沟通。"></a>其它：如果需要其它其它关联系统或专业人士如DBA配合的，也需要提前进行沟通。</h2><h1 id="性能测试执行"><a href="#性能测试执行" class="headerlink" title="性能测试执行"></a>性能测试执行</h1><ol>
+<li><p>人工边执行边分析<br>通常我们做性能测试都是人工执行并随时观察系统运行的情况、资源的使用率等指标。性能测试的吸引力之一就在于它的不可预知性。当我们在做性能测试的时候遇到跟预期不符的情况很正常，这个时候需要冷静的分析。但这个过程可能会很慢长，需要不断的调整系统配置或程序代码来定位问题，耗时耗人力。特别是在当前敏捷开发模式比较流行的大环境下，版本发布非常频繁且版本周期短（通常1~2周一个版本），没有那么长的时间来做性能测试。</p>
+</li>
+<li><p>无人值守执行性能测试<br>无人值守是最理想化的目标，目前我们也朝着这个方向努力。无人值守不是说没有人力介入，而是把人为的分析和执行过程分离，执行过程只是机器服从指令的运行而已。通常测试环境在白天比较繁忙，出现性能问题及定位难度较大且会影响功能测试。所以一般性能测试最好在晚上或周末进行，在相对较安静的条件有利于测试结果的稳定性。这种方法也相对比较适合敏捷的模式，不需要人工一直守着。只需要在拿到结果后进行分析就好了。同进，这种方式对测试人员能力的要求比较高，需要我们能进行自动化的收集各种监控数据、生成报表便于后续分析。</p>
+</li>
+</ol>
+<h1 id="结果分析与调优"><a href="#结果分析与调优" class="headerlink" title="结果分析与调优"></a>结果分析与调优</h1><p>关于性能分析与调优这是一个比较大的话题，后续会单独进行总结和分析。</p>
+<h1 id="测试报告与总结"><a href="#测试报告与总结" class="headerlink" title="测试报告与总结"></a>测试报告与总结</h1><ol>
+<li><p>性能测试报告是性能测试的里程碑，通过报告能展示出性能测试的最终成果，展示系统性能是否符合需求，是否有性能隐患。性能测试报告中需要阐明性能测试目标、性能测试环境、性能测试数据构造规则、性能测试策略、性能测试结果、性能测试调优说明、性能测试过程中遇到的问题和解决办法等。</p>
+</li>
+<li><p>性能测试工程师完成该次性能测试后，需要将测试结果进行备案，并做为下次性能测试的基线标准，具体包括性能测试结果数据、性能测试瓶颈和调优方案等。同时需要将测试过程中遇到的问题，包括代码瓶颈、配置项问题、数据问题和沟通问题，以及解决办法或解决方案，进行知识沉淀。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://vwin.github.io/2019/08/10/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" title="性能测试总结-测试流程" target="_blank" rel="external">http://vwin.github.io/2019/08/10/性能测试总结-测试流程/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/vwin" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/vwin" target="_blank"><span class="text-dark">will</span><small class="ml-1x">Software Development Engineer in Test &amp; Devops Engineer</small></a></h3>
+        <div>测试开发架构师 &amp;&amp; 工程效能专家</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/01/08/%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E6%A8%A1%E6%8B%9F%E5%92%8C%E6%B5%8B%E8%AF%95/" title="网络环境模拟和测试"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/08/09/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93-%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="性能测试总结-测试工具"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">    <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/vwin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://yuleweici.com/yuleweici/" target="_blank" title="Link" data-toggle=tooltip data-placement=top><i class="icon icon-link"></i></a></li>
+        
+        <li><a href="mailto:crazyboyspecial@qq.com" target="_blank" title="Email" data-toggle=tooltip data-placement=top><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2022 V
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>
