@@ -2,33 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://vwin.github.io/2022/09/16/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6-%E9%81%93%E6%A0%BC%E6%8B%89%E6%96%AF%E6%99%AE%E5%85%8B-Douglas-Peuker-%E7%AE%97%E6%B3%95%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/07/13/%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1%E8%AF%84%E8%AE%BA%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/12/02/%E9%87%8D%E5%90%AFphp7-fpm%E5%92%8Cphp5-fpm%E6%96%B9%E6%B3%95/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://vwin.github.io/about/index.html</loc>
     
     <lastmod>2022-11-19</lastmod>
@@ -66,6 +39,33 @@
   
   <url>
     <loc>http://vwin.github.io/tags/index.html</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2022/09/16/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6-%E9%81%93%E6%A0%BC%E6%8B%89%E6%96%AF%E6%99%AE%E5%85%8B-Douglas-Peuker-%E7%AE%97%E6%B3%95%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/07/13/%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1%E8%AF%84%E8%AE%BA%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/12/02/%E9%87%8D%E5%90%AFphp7-fpm%E5%92%8Cphp5-fpm%E6%96%B9%E6%B3%95/</loc>
     
     <lastmod>2022-11-19</lastmod>
     
@@ -263,6 +263,15 @@
   </url>
   
   <url>
+    <loc>http://vwin.github.io/2022/08/15/%E5%88%86%E6%94%AF%E7%AD%96%E7%95%A5/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://vwin.github.io/2022/11/15/%E5%8E%8B%E6%B5%8B-%E5%9F%BA%E4%BA%8EK6%E7%9A%84web%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%92%8C%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</loc>
     
     <lastmod>2022-11-19</lastmod>
@@ -282,15 +291,6 @@
   
   <url>
     <loc>http://vwin.github.io/2019/01/06/%E4%BF%9D%E9%99%A9%E9%85%8D%E7%BD%AE/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2022/08/15/%E5%88%86%E6%94%AF%E7%AD%96%E7%95%A5/</loc>
     
     <lastmod>2022-11-19</lastmod>
     
@@ -542,105 +542,6 @@
   </url>
   
   <url>
-    <loc>http://vwin.github.io/2018/10/11/Jenkins-HTML%E6%8A%A5%E5%91%8A%E6%A0%B7%E5%BC%8F%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2019/01/06/Jenkins-%E9%AB%98%E6%95%88%E6%8F%92%E4%BB%B6%E6%95%B4%E7%90%86/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/10/16/Kafka-%E7%AE%80%E4%BB%8B%E5%85%A5%E9%97%A8/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/10/16/Kafka-%E9%9B%86%E7%BE%A4partitions-replicas%E9%BB%98%E8%AE%A4%E5%88%86%E9%85%8D%E8%A7%A3%E6%9E%90/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/08/23/Linux-free%E5%91%BD%E4%BB%A4%E4%B8%ADcached%E5%92%8Cbuffers%E7%9A%84%E5%8C%BA%E5%88%AB/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/10/25/Linux%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/08/09/Linux%E5%AE%89%E8%A3%85Samba/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/08/08/Locust%E5%9F%BA%E7%A1%80-1/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/08/08/Locust%E5%9F%BA%E7%A1%80-2/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/12/25/Python-celery%E5%9F%BA%E7%A1%80/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/12/25/Python-flask%E8%B5%84%E6%BA%90/</loc>
-    
-    <lastmod>2022-11-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://vwin.github.io/2018/12/25/Python-lambda%E5%87%BD%E6%95%B0/</loc>
     
     <lastmod>2022-11-19</lastmod>
@@ -858,6 +759,105 @@
   
   <url>
     <loc>http://vwin.github.io/2018/08/07/Hexo-%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/10/11/Jenkins-HTML%E6%8A%A5%E5%91%8A%E6%A0%B7%E5%BC%8F%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2019/01/06/Jenkins-%E9%AB%98%E6%95%88%E6%8F%92%E4%BB%B6%E6%95%B4%E7%90%86/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/10/16/Kafka-%E7%AE%80%E4%BB%8B%E5%85%A5%E9%97%A8/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/10/16/Kafka-%E9%9B%86%E7%BE%A4partitions-replicas%E9%BB%98%E8%AE%A4%E5%88%86%E9%85%8D%E8%A7%A3%E6%9E%90/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/08/23/Linux-free%E5%91%BD%E4%BB%A4%E4%B8%ADcached%E5%92%8Cbuffers%E7%9A%84%E5%8C%BA%E5%88%AB/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/10/25/Linux%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/08/09/Linux%E5%AE%89%E8%A3%85Samba/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/08/08/Locust%E5%9F%BA%E7%A1%80-1/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/08/08/Locust%E5%9F%BA%E7%A1%80-2/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/12/25/Python-celery%E5%9F%BA%E7%A1%80/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/12/25/Python-flask%E8%B5%84%E6%BA%90/</loc>
     
     <lastmod>2022-11-19</lastmod>
     
