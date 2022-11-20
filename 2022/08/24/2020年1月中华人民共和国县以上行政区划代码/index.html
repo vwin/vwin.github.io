@@ -28,7 +28,7 @@
 <meta property="og:description" content="https:&#x2F;&#x2F;www.mca.gov.cn&#x2F;article&#x2F;sj&#x2F;xzqh&#x2F;2020&#x2F;2020&#x2F;202003061536.html  2020年1月中华人民共和国县以上行政区划代码		    行政区划代码 单位名称    110000 北京市   110101 东城区   110102 西城区   110105 朝阳区   110106 丰台区   110107 石景山区   110108 海淀">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-24T01:23:33.000Z">
-<meta property="article:modified_time" content="2022-11-20T08:48:22.881Z">
+<meta property="article:modified_time" content="2022-11-20T08:58:24.207Z">
 <meta property="article:author" content="V">
 <meta property="article:tag" content="行政区">
 <meta name="twitter:card" content="summary">
@@ -364,7 +364,9 @@
 
 	<span class="article-read hidden-xs">
     	<i class="icon icon-eye-fill" aria-hidden="true"></i>
-    	<span id="/2022/08/24/2020%E5%B9%B41%E6%9C%88%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8E%BF%E4%BB%A5%E4%B8%8A%E8%A1%8C%E6%94%BF%E5%8C%BA%E5%88%92%E4%BB%A3%E7%A0%81/" class="leancloud_visitors"  data-flag-title="2020年1月中华人民共和国县以上行政区划代码">0</span>
+    	<span id="/2022/08/24/2020%E5%B9%B41%E6%9C%88%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8E%BF%E4%BB%A5%E4%B8%8A%E8%A1%8C%E6%94%BF%E5%8C%BA%E5%88%92%E4%BB%A3%E7%A0%81/" class="leancloud_visitors"  data-flag-title="2020年1月中华人民共和国县以上行政区划代码">
+			<span class="leancloud-visitors-count">0</span>
+		</span>
     </span>
 
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/08/24/2020%E5%B9%B41%E6%9C%88%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8E%BF%E4%BB%A5%E4%B8%8A%E8%A1%8C%E6%94%BF%E5%8C%BA%E5%88%92%E4%BB%A3%E7%A0%81/#comments" class="article-comment-link">评论</a></span>
@@ -13405,98 +13407,6 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
    
 
 
-<!-- custom analytics part create by xiamo -->
-<!-- <script defer src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script> -->
-<!-- <script src="https://unpkg.com/leancloud-storage@4.12.2/dist/av-live-query-min.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script>
-<script defer>
-AV.init({
-  appId: 'kYGZ6VfUgySmlSPFebJoXAD5-MdYXbMMI',
-  appKey: 'EkbmuElfV0UIfgK2uCGwvUiU'
-});
-
-function showTime(Counter) {
-	var query = new AV.Query(Counter);
-		var visitors= $('.leancloud_visitors');
-		query.greaterThanOrEqualTo("time", 0);		
-		query.find({
-			success: function(results) {
-				if (results.length == 0) {				
-					return;
-				}
-				var data = results;
-				visitors.each(function(){
-					var url = $(this).attr('id').trim();					
-					for (var i = 0; i < data.length; i++) {
-						var object = data[i];
-						var content = object.get('time');
-						var _url = object.get('url')
-						if(url == _url){
-							$(this).text(content);
-						}
-					}
-				})
-				
-			},
-			error: function(object, error) {
-				console.log("Error: " + error.code + " " + error.message);
-			}
-		});
-}
-
-function addCount(Counter) {
-	var Counter = AV.Object.extend("Counter");
-	url = $(".leancloud_visitors").attr('id').trim();
-	title = $(".leancloud_visitors").attr('data-flag-title').trim();
-	var query = new AV.Query(Counter);
-	query.equalTo("url", url);
-	query.find({
-		success: function(results) {
-			if (results.length > 0) {
-				var counter = results[0];
-				counter.fetchWhenSave(true);
-				counter.increment("time");
-				counter.save(null, {
-					success: function(counter) {
-						var content = counter.get('time');
-						$(document.getElementById(url)).text(content);
-					},
-					error: function(counter, error) {
-						console.log('Failed to save Visitor num, with error message: ' + error.message);
-					}
-				});
-			} else {
-				var newcounter = new Counter();
-				newcounter.set("title", title);
-				newcounter.set("url", url);
-				newcounter.set("time", 1);
-				newcounter.save(null, {
-					success: function(newcounter) {
-					    console.log("newcounter.get('time')="+newcounter.get('time'));
-						var content = newcounter.get('time');
-						$(document.getElementById(url)).text(content);
-					},
-					error: function(newcounter, error) {
-						console.log('Failed to create');
-					}
-				});
-			}
-		},
-		error: function(error) {
-			console.log('Error:' + error.code + " " + error.message);
-		}
-	});
-}
-$(function() {
-	var Counter = AV.Object.extend("Counter");
-	if ($('.leancloud_visitors').length == 1) {
-		addCount(Counter);
-	} else {
-		showTime(Counter);
-	}
-}); 
-</script>
-
 
 
    
@@ -13523,7 +13433,7 @@ $(function() {
   //   meta: meta,
   //   pageSize: '10' || 10,
   //   serverURLs: 'https://kYGZ6VfU.api.lncldglobal.com',
-  //   visitor: false
+  //   visitor: true
   // });
   Waline.init({
       el: '#comments',

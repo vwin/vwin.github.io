@@ -28,7 +28,7 @@
 <meta property="og:description" content="Ubuntu下，网络环境模拟以及测试，可以使用自带命令netem和tc，需要注意的是：此方法只能控制发包动作，不能控制收包动作，同时，它直接对物理接口生效，如果控制了物理的eth0，那么逻辑网卡（比如eth0:1）也会受到影响，反之，如果您在逻辑网卡上做控制，该控制可能是无效的。（注：虚拟机中的多个网卡可以在虚拟机中视为多个物理网卡） 常用命令如下：  模拟延迟传输  1tc qdisc add">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-01-08T08:02:26.000Z">
-<meta property="article:modified_time" content="2022-11-20T08:48:22.893Z">
+<meta property="article:modified_time" content="2022-11-20T08:58:24.215Z">
 <meta property="article:author" content="V">
 <meta property="article:tag" content="测试">
 <meta property="article:tag" content="网络环境">
@@ -365,7 +365,9 @@
 
 	<span class="article-read hidden-xs">
     	<i class="icon icon-eye-fill" aria-hidden="true"></i>
-    	<span id="/2020/01/08/%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E6%A8%A1%E6%8B%9F%E5%92%8C%E6%B5%8B%E8%AF%95/" class="leancloud_visitors"  data-flag-title="网络环境模拟和测试">0</span>
+    	<span id="/2020/01/08/%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E6%A8%A1%E6%8B%9F%E5%92%8C%E6%B5%8B%E8%AF%95/" class="leancloud_visitors"  data-flag-title="网络环境模拟和测试">
+			<span class="leancloud-visitors-count">0</span>
+		</span>
     </span>
 
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/01/08/%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E6%A8%A1%E6%8B%9F%E5%92%8C%E6%B5%8B%E8%AF%95/#comments" class="article-comment-link">评论</a></span>
@@ -568,98 +570,6 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
    
 
 
-<!-- custom analytics part create by xiamo -->
-<!-- <script defer src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script> -->
-<!-- <script src="https://unpkg.com/leancloud-storage@4.12.2/dist/av-live-query-min.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script>
-<script defer>
-AV.init({
-  appId: 'kYGZ6VfUgySmlSPFebJoXAD5-MdYXbMMI',
-  appKey: 'EkbmuElfV0UIfgK2uCGwvUiU'
-});
-
-function showTime(Counter) {
-	var query = new AV.Query(Counter);
-		var visitors= $('.leancloud_visitors');
-		query.greaterThanOrEqualTo("time", 0);		
-		query.find({
-			success: function(results) {
-				if (results.length == 0) {				
-					return;
-				}
-				var data = results;
-				visitors.each(function(){
-					var url = $(this).attr('id').trim();					
-					for (var i = 0; i < data.length; i++) {
-						var object = data[i];
-						var content = object.get('time');
-						var _url = object.get('url')
-						if(url == _url){
-							$(this).text(content);
-						}
-					}
-				})
-				
-			},
-			error: function(object, error) {
-				console.log("Error: " + error.code + " " + error.message);
-			}
-		});
-}
-
-function addCount(Counter) {
-	var Counter = AV.Object.extend("Counter");
-	url = $(".leancloud_visitors").attr('id').trim();
-	title = $(".leancloud_visitors").attr('data-flag-title').trim();
-	var query = new AV.Query(Counter);
-	query.equalTo("url", url);
-	query.find({
-		success: function(results) {
-			if (results.length > 0) {
-				var counter = results[0];
-				counter.fetchWhenSave(true);
-				counter.increment("time");
-				counter.save(null, {
-					success: function(counter) {
-						var content = counter.get('time');
-						$(document.getElementById(url)).text(content);
-					},
-					error: function(counter, error) {
-						console.log('Failed to save Visitor num, with error message: ' + error.message);
-					}
-				});
-			} else {
-				var newcounter = new Counter();
-				newcounter.set("title", title);
-				newcounter.set("url", url);
-				newcounter.set("time", 1);
-				newcounter.save(null, {
-					success: function(newcounter) {
-					    console.log("newcounter.get('time')="+newcounter.get('time'));
-						var content = newcounter.get('time');
-						$(document.getElementById(url)).text(content);
-					},
-					error: function(newcounter, error) {
-						console.log('Failed to create');
-					}
-				});
-			}
-		},
-		error: function(error) {
-			console.log('Error:' + error.code + " " + error.message);
-		}
-	});
-}
-$(function() {
-	var Counter = AV.Object.extend("Counter");
-	if ($('.leancloud_visitors').length == 1) {
-		addCount(Counter);
-	} else {
-		showTime(Counter);
-	}
-}); 
-</script>
-
 
 
    
@@ -686,7 +596,7 @@ $(function() {
   //   meta: meta,
   //   pageSize: '10' || 10,
   //   serverURLs: 'https://kYGZ6VfU.api.lncldglobal.com',
-  //   visitor: false
+  //   visitor: true
   // });
   Waline.init({
       el: '#comments',
