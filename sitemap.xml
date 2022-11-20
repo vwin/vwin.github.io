@@ -2,6 +2,132 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://vwin.github.io/2022/11/03/Python-%E5%8D%95%E6%B5%8B/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2022/08/26/Python-%E5%AF%B9ZIP%E5%A4%84%E7%90%86/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/09/12/Python-%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E5%A4%84%E7%90%86%E6%80%BB%E7%BB%93/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/08/23/Python-%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%99%E6%B3%95/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/11/01/Python-%E6%A3%80%E6%B5%8B%E7%94%9F%E5%83%BB%E5%AD%97/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/11/14/Python-%E8%A7%A3%E6%9E%90%E4%B8%80%E8%A1%8C%E4%B8%AD%E7%9A%84%E5%A4%9A%E4%B8%AAJSon%E5%AF%B9%E8%B1%A1/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/12/25/Python-%E9%97%AD%E5%8C%85/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/12/23/Python%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/12/23/Python%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/11/23/Python%E4%BD%BF%E7%94%A8Jupyter-notebook/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/12/24/Python%E5%AE%9E%E7%8E%B0%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/09/19/Supervisor%E7%AE%A1%E7%90%86%E8%BF%9B%E7%A8%8B/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2018/11/11/TP-FP-TN-FN-ROC%E7%90%86%E8%A7%A3/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://vwin.github.io/2022/11/19/ToB%E4%B8%9A%E5%8A%A1%E7%90%86%E8%A7%A3/</loc>
+    
+    <lastmod>2022-11-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://vwin.github.io/2022/08/25/UI%E8%87%AA%E5%8A%A8%E5%8C%96-%E5%9F%BA%E4%BA%8EAirTest-Python%E7%9A%84ios%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/</loc>
     
     <lastmod>2022-11-20</lastmod>
@@ -732,132 +858,6 @@
   
   <url>
     <loc>http://vwin.github.io/2018/10/09/Python-%E5%8D%87%E7%BA%A7%E6%89%80%E6%9C%89%E5%8C%85/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2022/11/03/Python-%E5%8D%95%E6%B5%8B/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2022/08/26/Python-%E5%AF%B9ZIP%E5%A4%84%E7%90%86/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/09/12/Python-%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E5%A4%84%E7%90%86%E6%80%BB%E7%BB%93/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/08/23/Python-%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%99%E6%B3%95/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/11/01/Python-%E6%A3%80%E6%B5%8B%E7%94%9F%E5%83%BB%E5%AD%97/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/11/14/Python-%E8%A7%A3%E6%9E%90%E4%B8%80%E8%A1%8C%E4%B8%AD%E7%9A%84%E5%A4%9A%E4%B8%AAJSon%E5%AF%B9%E8%B1%A1/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/12/25/Python-%E9%97%AD%E5%8C%85/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/12/23/Python%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/12/23/Python%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/11/23/Python%E4%BD%BF%E7%94%A8Jupyter-notebook/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/12/24/Python%E5%AE%9E%E7%8E%B0%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/09/19/Supervisor%E7%AE%A1%E7%90%86%E8%BF%9B%E7%A8%8B/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2018/11/11/TP-FP-TN-FN-ROC%E7%90%86%E8%A7%A3/</loc>
-    
-    <lastmod>2022-11-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://vwin.github.io/2022/11/19/ToB%E4%B8%9A%E5%8A%A1%E7%90%86%E8%A7%A3/</loc>
     
     <lastmod>2022-11-20</lastmod>
     
