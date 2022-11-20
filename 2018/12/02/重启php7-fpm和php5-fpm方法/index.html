@@ -28,7 +28,7 @@
 <meta property="og:description" content="各个平台上如何重启php7-fpm和php5-fpm">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-12-02T20:53:44.000Z">
-<meta property="article:modified_time" content="2022-11-20T04:46:24.194Z">
+<meta property="article:modified_time" content="2022-11-20T04:55:50.701Z">
 <meta property="article:author" content="V">
 <meta property="article:tag" content="php7-fpm">
 <meta property="article:tag" content="php5-fpm">
@@ -371,6 +371,13 @@
 	</span>
 
 
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2018/12/02/%E9%87%8D%E5%90%AFphp7-fpm%E5%92%8Cphp5-fpm%E6%96%B9%E6%B3%95/" class="leancloud_visitors"  data-flag-title="重启php7-fpm和php5-fpm方法">
+			<span class="leancloud-visitors-count">0</span>
+		</span>
+    </span>
+
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/12/02/%E9%87%8D%E5%90%AFphp7-fpm%E5%92%8Cphp5-fpm%E6%96%B9%E6%B3%95/#comments" class="article-comment-link">评论</a></span>
         
 	
@@ -458,6 +465,8 @@
     
   <section id="comments">
   	
+      <div id="vcomments"></div>
+    
   </section>
 
 
@@ -570,6 +579,31 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
    
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'kYGZ6VfUgySmlSPFebJoXAD5-MdYXbMMI',
+    appKey: 'EkbmuElfV0UIfgK2uCGwvUiU',
+    placeholder: '有任何问题可以留言哦~',
+    avatar: 'monsterid',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
 
 
   <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
