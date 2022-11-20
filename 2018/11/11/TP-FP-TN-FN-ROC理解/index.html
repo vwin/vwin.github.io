@@ -28,7 +28,7 @@
 <meta property="og:description" content="机器学习中算法评估的几个概念，tp,fp,tn,fn,roc,auc,F1值的理解">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-11-11T13:37:20.000Z">
-<meta property="article:modified_time" content="2022-11-20T09:00:57.279Z">
+<meta property="article:modified_time" content="2022-11-20T16:41:44.897Z">
 <meta property="article:author" content="V">
 <meta property="article:tag" content="tp">
 <meta property="article:tag" content="fn">
@@ -374,6 +374,13 @@
 	</span>
 
 
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2018/11/11/TP-FP-TN-FN-ROC%E7%90%86%E8%A7%A3/" class="leancloud_visitors"  data-flag-title="TP FP TN FN ROC理解">
+			<span class="leancloud-visitors-count">0</span>
+		</span>
+    </span>
+
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/11/11/TP-FP-TN-FN-ROC%E7%90%86%E8%A7%A3/#comments" class="article-comment-link">评论</a></span>
         
 	
@@ -452,6 +459,8 @@
     
   <section id="comments">
   	
+      <div id="vcomments"></div>
+    
   </section>
 
 
@@ -564,6 +573,39 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
    
+    
+  <!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+  <!-- <script src="//code.bdstatic.com/npm/leancloud-storage@4.12.0/dist/av-min.js"></script> -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/valine"></script> -->
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css"/>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  // new Valine({
+  //   el: '#vcomments',
+  //   verify: false,
+  //   notify: false,
+  //   appId: 'kYGZ6VfUgySmlSPFebJoXAD5-MdYXbMMI',
+  //   appKey: 'EkbmuElfV0UIfgK2uCGwvUiU',
+  //   placeholder: '有任何问题可以留言哦~',
+  //   avatar: 'monsterid',
+  //   meta: meta,
+  //   pageSize: '10' || 10,
+  //   serverURLs: 'https://kYGZ6VfU.api.lncldglobal.com',
+  //   visitor: true
+  // });
+  Waline.init({
+      el: '#comments',
+      serverURL: 'https://hexo-waline-henna.vercel.app',
+  });
+  </script>
+
+     
+
 
 
   <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
